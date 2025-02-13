@@ -16,7 +16,7 @@ import (
 const syncFileName = "sync-state.json"
 
 type SyncState struct {
-	Products []api.SimplyProduct `json:"products"`
+	Products []*api.SimplyProduct `json:"products"`
 }
 
 var Sync *SyncState
@@ -77,8 +77,44 @@ func InitSync() error {
 	return nil
 }
 
+func SaveSyncState() error {
+	ulog.Console.Info().Msg("Saving sync-state...")
+
+	var usr *user.User
+	var err error
+	usr, err = user.Current()
+	if err != nil {
+		return err
+	}
+	var configFolder = path.Join(usr.HomeDir, ".config", AppName)
+	var homeFilePath = path.Join(usr.HomeDir, ".config", AppName, syncFileName)
+	var localFilePath = path.Join("./", syncFileName)
+
+	configFolderExists := false
+	if p, _ := filepath.Glob(configFolder); len(p) > 0 {
+		configFolderExists = true
+	}
+
+	if configFolderExists {
+		err = configuration.SaveJsonIndented(homeFilePath, Sync, true)
+		if err != nil {
+			return err
+		}
+	}
+
+	if !configFolderExists {
+		err = configuration.SaveJsonIndented(localFilePath, Sync, true)
+		if err != nil {
+			return err
+		}
+	}
+
+	ulog.Console.Info().Msg("Sync-state saved")
+	return nil
+}
+
 func initDefaultSync() SyncState {
 	return SyncState{
-		Products: make([]api.SimplyProduct, 0),
+		Products: make([]*api.SimplyProduct, 0),
 	}
 }

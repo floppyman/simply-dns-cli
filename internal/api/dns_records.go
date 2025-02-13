@@ -76,7 +76,7 @@ type SimplyProduct struct {
 		DateExpire  interface{} `json:"date_expire"`
 	} `json:"product"`
 
-	DnsRecords []SimplyDnsRecord `json:"dns_records"`
+	DnsRecords []*SimplyDnsRecord `json:"dns_records"`
 }
 
 type SimplyDnsRecord struct {
