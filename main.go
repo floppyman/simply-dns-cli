@@ -22,10 +22,6 @@ func main() {
 		ulog.Console.Error().Msgf("Be sure to create a 'config.json' either in '~/.config/%s/' or besides the executable", configs.AppName)
 		return
 	}
-	err = configs.InitSync()
-	if err != nil {
-		return
-	}
 
 	// https://github.com/spf13/cobra/blob/v1.8.0/site/content/user_guide.md
 	_ = cmd.RootExecute()

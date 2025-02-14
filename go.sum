@@ -25,8 +25,8 @@ github.com/spf13/cobra v1.8.1/go.mod h1:wHxEcudfqmLYa8iTfL+OuZPbBZkmvliBWKIezN3k
 github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
 github.com/spf13/pflag v1.0.6 h1:jFzHGLGAlb3ruxLB8MhbI6A8+AQX/2eW4qeyNZXNp2o=
 github.com/spf13/pflag v1.0.6/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
-github.com/umbrella-sh/um-common v1.1.2 h1:8tgDbMRXTZu9j8EfwBtV+bHqDXyslAaAXK4An4X4v0Y=
-github.com/umbrella-sh/um-common v1.1.2/go.mod h1:ZGfqlUxmTwM8j61r7YsouQxuWkzaMegOi0qOyUStTtI=
+github.com/umbrella-sh/um-common v1.1.4 h1:MjD1Pnsx4onI9J3CbARs7X2MZQbYcOElc+enxml0k2U=
+github.com/umbrella-sh/um-common v1.1.4/go.mod h1:ZGfqlUxmTwM8j61r7YsouQxuWkzaMegOi0qOyUStTtI=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c h1:Hei/4ADfdWqJk1ZMxUNpqntNwaWcugrBjAiHlqqRiVk=
 gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c/go.mod h1:JHkPIbrfpd72SG/EVd6muEfDQjcINNoR0C8j2r3qZ4Q=

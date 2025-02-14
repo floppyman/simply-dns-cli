@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/umbrella-sh/simply-dns-sync/internal/api"
-	"github.com/umbrella-sh/simply-dns-sync/internal/cmd/pull"
+	"github.com/umbrella-sh/simply-dns-sync/internal/cmd/backup"
 	"github.com/umbrella-sh/simply-dns-sync/internal/cmd/push"
 	"github.com/umbrella-sh/simply-dns-sync/internal/configs"
 )
@@ -15,7 +15,7 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(pull.PullCmd)
+	rootCmd.AddCommand(backup.BackupCmd)
 	rootCmd.AddCommand(push.PushCmd)
 }
 

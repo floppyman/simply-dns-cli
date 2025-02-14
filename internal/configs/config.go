@@ -11,8 +11,6 @@ import (
 	"github.com/umbrella-sh/um-common/logging/ulog"
 )
 
-const configFileName = "config.json"
-
 type Config struct {
 	SimplyApi ConfigSimplyApi `json:"simply_api"`
 }
