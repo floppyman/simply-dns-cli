@@ -4,7 +4,7 @@ go 1.23
 
 require (
 	github.com/spf13/cobra v1.8.1
-	github.com/umbrella-sh/um-common v1.1.14
+	github.com/umbrella-sh/um-common v1.1.16
 )
 
 require (

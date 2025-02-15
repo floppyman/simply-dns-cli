@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	log "github.com/umbrella-sh/um-common/logging/basic"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/shared"
+	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 )
 
 //goland:noinspection GoNameStartsWithPackageName
