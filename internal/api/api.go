@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/umbrella-sh/um-common/logging/ulog"
+	log "github.com/umbrella-sh/um-common/logging/basic"
 )
 
 // https://www.simply.com/dk/docs/api/
@@ -36,7 +36,7 @@ func CreateDnsRecord(productObject string, obj *SimplyDnsRecord) error {
 		return err
 	}
 
-	ulog.Console.Debug().Str("body", string(res)).Msg("CreateDnsRecord Response")
+	log.Debugf("CreateDnsRecord Response, body: %s", string(res))
 
 	// var records SimplyApiDnsRecords
 	// err = json.Unmarshal(res, &records)
@@ -53,7 +53,7 @@ func UpdateDnsRecord(productObject string, recordId int64, obj *SimplyDnsRecord)
 		return err
 	}
 
-	ulog.Console.Debug().Str("body", string(res)).Msg("UpdateDnsRecord Response")
+	log.Debugf("UpdateDnsRecord Response, body: %s", string(res))
 
 	// var records SimplyApiDnsRecords
 	// err = json.Unmarshal(res, &records)
@@ -70,7 +70,7 @@ func DeleteDnsRecord(productObject string, recordId int64) error {
 		return err
 	}
 
-	ulog.Console.Debug().Str("body", string(res)).Msg("DeleteDnsRecord Response")
+	log.Debugf("DeleteDnsRecord Response, body: %s", string(res))
 
 	// var records SimplyApiDnsRecords
 	// err = json.Unmarshal(res, &records)
@@ -84,7 +84,6 @@ func DeleteDnsRecord(productObject string, recordId int64) error {
 func GetProducts() ([]*SimplyProduct, error) {
 	res, err := getRequest("/my/products")
 	if err != nil {
-		ulog.Console.Debug().Msg("1")
 		return nil, err
 	}
 

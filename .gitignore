@@ -30,6 +30,6 @@ go.work
 
 # Config and environment
 config.json
-sync-state.json
+backup_*.json
 
 # End of https://www.toptal.com/developers/gitignore/api/go

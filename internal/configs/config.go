@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/umbrella-sh/um-common/configuration"
-	"github.com/umbrella-sh/um-common/logging/ulog"
+	log "github.com/umbrella-sh/um-common/logging/basic"
 )
 
 type Config struct {
@@ -24,7 +24,7 @@ type ConfigSimplyApi struct {
 var Main *Config
 
 func InitConfig() error {
-	ulog.Console.Info().Msg("Loading config...")
+	log.WaitPrint("loading config")
 
 	var usr *user.User
 	var err error
@@ -45,7 +45,8 @@ func InitConfig() error {
 	Main, err = configuration.LoadJson(homeConfigPath, &cfgDef, false, "")
 	if err != nil {
 		if configFolderExists {
-			ulog.Console.Err(err).Msgf("Failed to load config file from '%s'", homeConfigPath)
+			log.Errorf("failed to load config file from '%s'\n", homeConfigPath)
+			log.Errorln(err)
 			return err
 		}
 
@@ -53,13 +54,13 @@ func InitConfig() error {
 			var localConfigPath = path.Join("./", configFileName)
 			Main, err = configuration.LoadJson(localConfigPath, &cfgDef, false, "")
 			if err != nil {
-				ulog.Console.Err(err).Msgf("Failed to load config file from '%s'", localConfigPath)
+				log.Errorf("failed to load config file from '%s'", localConfigPath)
+				log.Errorln(err)
 				return err
 			}
 		}
 	}
 
-	ulog.Console.Info().Msg("Config loaded")
 	return testConfig()
 }
 
@@ -75,27 +76,27 @@ func initDefaultConfig() Config {
 
 func testConfig() error {
 	hasErr := false
-	ulog.Console.Info().Msg("Testing config...")
+	log.BlankPrint("testing config")
 
 	if Main.SimplyApi.Url == "" {
 		hasErr = true
-		ulog.Console.Error().Msg("'simply_api.url' must be set to a valid url for Simply.com API (https://www.simply.com/dk/docs/api/)")
+		log.Errorln("'simply_api.url' must be set to a valid url for Simply.com API (https://www.simply.com/dk/docs/api/)")
 	}
 
 	if Main.SimplyApi.AccountNumber == "" {
 		hasErr = true
-		ulog.Console.Error().Msg("'simply_api.account_number' must be set to account number retrieved from Simply.com")
+		log.Errorln("'simply_api.account_number' must be set to account number retrieved from Simply.com")
 	}
 
 	if Main.SimplyApi.AccountApiKey == "" {
 		hasErr = true
-		ulog.Console.Error().Msg("'simply_api.account_api_key' must be set to the account Api Key retrieved from Simply.com")
+		log.Errorln("'simply_api.account_api_key' must be set to the account Api Key retrieved from Simply.com")
 	}
 
 	if hasErr {
-		ulog.Console.Error().Msg("Testing config failed")
-		return errors.New("config test failed")
+		log.FailPrint("config loaded but testing failed")
+		return errors.New("")
 	}
-	ulog.Console.Info().Msg("Testing success")
+	log.SuccessPrint("config loaded and testing success")
 	return nil
 }

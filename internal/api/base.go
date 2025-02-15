@@ -9,14 +9,11 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-
-	"github.com/umbrella-sh/um-common/logging/ulog"
 )
 
 func getRequest(path string) ([]byte, error) {
 	req, err := createRequest(http.MethodGet, path, nil)
 	if err != nil {
-		ulog.Console.Debug().Msg("1")
 		return nil, err
 	}
 
@@ -63,7 +60,6 @@ func deleteRequest(path string) ([]byte, error) {
 func createRequest(method string, path string, reader io.Reader) (*http.Request, error) {
 	req, err := http.NewRequest(method, createFullUrl(path), reader)
 	if err != nil {
-		ulog.Console.Debug().Msg("1")
 		return nil, err
 	}
 
@@ -84,7 +80,7 @@ func doRequest(req *http.Request) ([]byte, error) {
 	}
 
 	if res.StatusCode != 200 {
-		return nil, errors.New(fmt.Sprintf("request failed with status code %d | %s | %s", res.StatusCode, res.Status, bodyStr))
+		return nil, errors.New(fmt.Sprintf("request failed with status code %d | %s | body: %s", res.StatusCode, res.Status, bodyStr))
 	}
 
 	return bodyStr, nil
