@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/umbrella-sh/um-common/logging/ulog"
 
-	"github.com/umbrella-sh/simply-dns-sync/internal/cmd"
-	"github.com/umbrella-sh/simply-dns-sync/internal/configs"
+	"github.com/umbrella-sh/simply-dns-cli/internal/cmd"
+	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
 )
 
 var (

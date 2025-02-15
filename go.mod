@@ -1,4 +1,4 @@
-module github.com/umbrella-sh/simply-dns-sync
+module github.com/umbrella-sh/simply-dns-cli
 
 go 1.23
 

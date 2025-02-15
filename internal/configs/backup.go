@@ -12,7 +12,7 @@ import (
 	"github.com/umbrella-sh/um-common/logging/ulog"
 	"github.com/umbrella-sh/um-common/types"
 
-	"github.com/umbrella-sh/simply-dns-sync/internal/api"
+	"github.com/umbrella-sh/simply-dns-cli/internal/api"
 )
 
 type BackupFile struct {

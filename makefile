@@ -1,7 +1,8 @@
 # --- Makefile ----
 
 # This how we want to name the binary output
-BINARY=./bin/simply-dns-sync
+BINARY=./bin/simply-dns-cli
+PROJECT=github.com/umbrella-sh/simply-dns-cli
 
 # These are the values we want to pass for VERSION and BUILD
 # git tag 1.0.1
@@ -17,13 +18,13 @@ linux:
 	$(info )
 	$(info build)
 	$(info --------------------)
-	GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o $(BINARY) github.com/umbrella-sh/simply-dns-sync
+	GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o $(BINARY)
 
 windows:
 	$(info )
 	$(info build)
 	$(info --------------------)
-	GOOS=windows GOARCH=amd64 go build $(LDFLAGS) -o $(BINARY).exe github.com/umbrella-sh/simply-dns-sync
+	GOOS=windows GOARCH=amd64 go build $(LDFLAGS) -o $(BINARY).exe $(PROJECT)
 
 # Cleans our project: deletes binaries
 clean:

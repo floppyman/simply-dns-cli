@@ -7,8 +7,8 @@ import (
 	"github.com/umbrella-sh/um-common/logging/ulog"
 	"github.com/umbrella-sh/um-common/utils"
 
-	"github.com/umbrella-sh/simply-dns-sync/internal/api"
-	"github.com/umbrella-sh/simply-dns-sync/internal/configs"
+	"github.com/umbrella-sh/simply-dns-cli/internal/api"
+	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
 )
 
 //goland:noinspection GoNameStartsWithPackageName

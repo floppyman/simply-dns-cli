@@ -3,10 +3,10 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/umbrella-sh/simply-dns-sync/internal/api"
-	"github.com/umbrella-sh/simply-dns-sync/internal/cmd/backup"
-	"github.com/umbrella-sh/simply-dns-sync/internal/cmd/push"
-	"github.com/umbrella-sh/simply-dns-sync/internal/configs"
+	"github.com/umbrella-sh/simply-dns-cli/internal/api"
+	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/backup"
+	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/push"
+	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
 )
 
 var rootCmd = &cobra.Command{
