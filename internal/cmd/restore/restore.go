@@ -3,9 +3,8 @@ package restore
 import (
 	"time"
 
-	log "github.com/umbrella-sh/um-common/logging/basic"
-
 	"github.com/umbrella-sh/simply-dns-cli/internal/api"
+	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
 //goland:noinspection GoNameStartsWithPackageName
@@ -15,7 +14,7 @@ type RestoreFile struct {
 }
 
 func LoadBackup(backupName string) (*RestoreFile, error) {
-	log.WaitPrint("Loading backup")
+	styles.WaitPrint("Loading backup")
 
 	// fileName := fmt.Sprintf("%s.json", backupName)
 	//
@@ -56,6 +55,6 @@ func LoadBackup(backupName string) (*RestoreFile, error) {
 	// 	}
 	// }
 
-	log.SuccessPrint("Backup loaded")
+	styles.SuccessPrint("Backup loaded")
 	return backupFile, nil
 }

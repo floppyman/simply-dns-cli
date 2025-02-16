@@ -13,3 +13,11 @@ type SimplyApiDnsRecords struct {
 type SimplyApiProducts struct {
 	Products []*SimplyProduct `json:"products"`
 }
+
+type SimplyApiSuccessResponse struct {
+	Record struct {
+		Id int `json:"id"`
+	} `json:"record"`
+	Status  int    `json:"status"`
+	Message string `json:"message"`
+}

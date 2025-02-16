@@ -2,7 +2,8 @@ package remove
 
 import (
 	"github.com/spf13/cobra"
-	log "github.com/umbrella-sh/um-common/logging/basic"
+
+	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
 //goland:noinspection GoNameStartsWithPackageName
@@ -18,5 +19,5 @@ func handleArgs(cmd *cobra.Command, args []string) error {
 }
 
 func cmdRun(_ *cobra.Command, _ []string) {
-	log.Warnln("Not implemented yet")
+	styles.WarnPrint("Not implemented yet")
 }

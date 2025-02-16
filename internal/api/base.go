@@ -64,6 +64,9 @@ func createRequest(method string, path string, reader io.Reader) (*http.Request,
 	}
 
 	req.Header.Set("Authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", currentConfig.AccountNumber, currentConfig.AccountApiKey)))))
+	if method == http.MethodPost || method == http.MethodPut {
+		req.Header.Set("Content-Type", "application/json")
+	}
 
 	return req, nil
 }

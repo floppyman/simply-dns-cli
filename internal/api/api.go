@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	log "github.com/umbrella-sh/um-common/logging/basic"
+	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
 // https://www.simply.com/dk/docs/api/
@@ -30,55 +30,53 @@ func GetDnsRecords(productObject string) ([]*SimplyDnsRecord, error) {
 	return records.Records, nil
 }
 
-func CreateDnsRecord(productObject string, obj *SimplyDnsRecord) error {
+func CreateDnsRecord(productObject string, obj *SimplyDnsRecord) (*SimplyApiSuccessResponse, error) {
 	res, err := postRequest(fmt.Sprintf("/my/products/%s/dns/records", productObject), obj)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	log.Debugf("CreateDnsRecord Response, body: %s", string(res))
+	var response *SimplyApiSuccessResponse
+	err = json.Unmarshal(res, &response)
+	if err != nil {
+		return nil, err
+	}
 
-	// var records SimplyApiDnsRecords
-	// err = json.Unmarshal(res, &records)
-	// if err != nil {
-	// 	return  err
-	// }
-
-	return nil
+	return response, nil
 }
 
-func UpdateDnsRecord(productObject string, recordId int64, obj *SimplyDnsRecord) error {
+func UpdateDnsRecord(productObject string, recordId int64, obj *SimplyDnsRecord) (*SimplyApiSuccessResponse, error) {
 	res, err := putRequest(fmt.Sprintf("/my/products/%s/dns/records/%d", productObject, recordId), obj)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	log.Debugf("UpdateDnsRecord Response, body: %s", string(res))
+	styles.Println(styles.Graphic("UpdateDnsRecord Response, body: %s", string(res)))
 
-	// var records SimplyApiDnsRecords
-	// err = json.Unmarshal(res, &records)
-	// if err != nil {
-	// 	return  err
-	// }
+	var response *SimplyApiSuccessResponse
+	err = json.Unmarshal(res, &response)
+	if err != nil {
+		return nil, err
+	}
 
-	return nil
+	return response, nil
 }
 
-func DeleteDnsRecord(productObject string, recordId int64) error {
+func DeleteDnsRecord(productObject string, recordId int64) (*SimplyApiSuccessResponse, error) {
 	res, err := deleteRequest(fmt.Sprintf("/my/products/%s/dns/records/%d", productObject, recordId))
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	log.Debugf("DeleteDnsRecord Response, body: %s", string(res))
+	styles.Println(styles.Graphic("DeleteDnsRecord Response, body: %s", string(res)))
 
-	// var records SimplyApiDnsRecords
-	// err = json.Unmarshal(res, &records)
-	// if err != nil {
-	// 	return  err
-	// }
+	var response *SimplyApiSuccessResponse
+	err = json.Unmarshal(res, &response)
+	if err != nil {
+		return nil, err
+	}
 
-	return nil
+	return response, nil
 }
 
 func GetProducts() ([]*SimplyProduct, error) {

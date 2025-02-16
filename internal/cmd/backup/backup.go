@@ -10,11 +10,11 @@ import (
 
 	"github.com/umbrella-sh/um-common/configuration"
 	"github.com/umbrella-sh/um-common/ext"
-	log "github.com/umbrella-sh/um-common/logging/basic"
 	"github.com/umbrella-sh/um-common/types"
 
 	"github.com/umbrella-sh/simply-dns-cli/internal/api"
 	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
+	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
 const backupFileName = "backup_{{ts}}.json"
@@ -44,8 +44,8 @@ func SaveBackup(data []*api.SimplyProduct, now time.Time) (string, error) {
 		return fileName, nil
 	}
 
-	log.FailPrint(fmt.Sprint(homeErr))
-	log.FailPrint(fmt.Sprint(localErr))
+	styles.FailPrint("homeErr: %v", homeErr)
+	styles.FailPrint("localErr: %v", localErr)
 	return "", fmt.Errorf("")
 }
 

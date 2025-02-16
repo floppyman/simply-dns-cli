@@ -4,8 +4,8 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/umbrella-sh/simply-dns-cli/internal/api"
-	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/add"
 	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/backup"
+	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/create"
 	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/remove"
 	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/restore"
 	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/update"
@@ -18,7 +18,7 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(add.AddCmd)
+	rootCmd.AddCommand(create.CreateCmd)
 	rootCmd.AddCommand(update.UpdateCmd)
 	rootCmd.AddCommand(remove.RemoveCmd)
 	rootCmd.AddCommand(backup.BackupCmd)
@@ -31,6 +31,6 @@ func RootExecute() error {
 		AccountNumber: configs.Main.SimplyApi.AccountNumber,
 		AccountApiKey: configs.Main.SimplyApi.AccountApiKey,
 	})
-	
+
 	return rootCmd.Execute()
 }
