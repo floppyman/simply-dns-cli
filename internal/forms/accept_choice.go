@@ -10,7 +10,12 @@ import (
 )
 
 func RunAcceptInput() (bool, bool) {
-	p := tea.NewProgram(gf.InitGenericBooleanModel("Is this correct?", gf.GbmYesNo, true))
+	model := gf.InitGenericBooleanModel(gf.GenericBooleanModelInput{
+		HeaderText:   "Is this correct?",
+		InitialValue: true,
+		Mode:         gf.GbmYesNo,
+	})
+	p := tea.NewProgram(model)
 	m, err := p.Run()
 	if err != nil {
 		log.Errorln("tea failed, ", err)

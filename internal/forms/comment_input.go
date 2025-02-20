@@ -1,6 +1,7 @@
 package forms
 
 import (
+	"fmt"
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -11,7 +12,7 @@ import (
 
 func RunCommentInput() (bool, string) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
-		HeaderText:      "Comment:",
+		HeaderText:      fmt.Sprintf("%-*s", longestHeader, "Comment:"),
 		PlaceHolderText: "",
 		ValueCharLimit:  255,
 		IsRequired:      false,

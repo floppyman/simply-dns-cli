@@ -1,6 +1,7 @@
 package forms
 
 import (
+	"fmt"
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -43,7 +44,13 @@ func RunTypeSelect() (bool, api.DnsRecordType) {
 		api.DnsRecTypeTLSA,
 		api.DnsRecTypeTXT,
 	}
-	p := tea.NewProgram(gf.InitGenericSelectModel("Select Entry Type:", choices, values))
+	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
+		HeaderText:   fmt.Sprintf("%-*s", longestHeader, "Entry Type:"),
+		Choices:      choices,
+		Values:       values,
+		InitialValue: 0,
+	})
+	p := tea.NewProgram(model)
 	m, err := p.Run()
 	if err != nil {
 		log.Errorln("tea failed, ", err)

@@ -25,10 +25,10 @@ type (
 		InputConverter  GenericInputConverter
 	}
 	GenericInputModel struct {
+		GenericInputModelInput
 		textInput  textinput.Model
 		err        error
 		cancelForm bool
-		GenericInputModelInput
 	}
 )
 

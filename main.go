@@ -16,7 +16,7 @@ func main() {
 
 	err := configs.InitConfig()
 	if err != nil {
-		styles.FailPrint("be sure to create a 'config.json' either in '~/.config/%s/' or besides the executable", configs.AppName)
+		styles.FailPrint("Be sure to create a 'config.json' either in '~/.config/%s/' or besides the executable", configs.AppName)
 		return
 	}
 	styles.Blank()

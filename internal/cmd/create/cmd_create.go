@@ -23,7 +23,7 @@ func cmdRun(_ *cobra.Command, _ []string) {
 	}
 
 	var accepted bool
-	cancelled, accepted = acceptInfo(record)
+	cancelled, accepted = acceptInfo()
 
 	if !accepted {
 		printNotAcceptedText()
@@ -47,18 +47,13 @@ func createRecord(domain string, record *api.SimplyDnsRecord) {
 	styles.SuccessPrint("DNS Entry created on %s", domain)
 }
 
-func acceptInfo(record *api.SimplyDnsRecord) (cancelled bool, accepted bool) {
+func acceptInfo() (cancelled bool, accepted bool) {
 	styles.Blank()
-	styles.Println(styles.Header("Your input:"))
-	record.Print("  ")
-	styles.Blank()
-
 	cancelled, accepted = forms.RunAcceptInput()
 	if cancelled {
 		return cancelled, accepted
 	}
 	styles.Blank()
-
 	return cancelled, accepted
 }
 
@@ -77,7 +72,6 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 		if cancelled {
 			return cancelled, "", nil
 		}
-		styles.Blank()
 	} else {
 		domain = options.Domain
 	}
@@ -87,7 +81,6 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 		if cancelled {
 			return cancelled, "", nil
 		}
-		styles.Blank()
 	} else {
 		record.Type = api.DnsRecordType(options.Type)
 	}
@@ -97,7 +90,6 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 		if cancelled {
 			return cancelled, "", nil
 		}
-		styles.Blank()
 	} else {
 		record.TTL = api.DnsRecordTTL(options.TTL)
 	}
@@ -135,7 +127,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 		record.Priority = jsons.NullJsonInt32()
 	}
 
-	if options.Comment == "" {
+	if options.Comment == NoCommentValue {
 		cancelled, record.Comment = forms.RunCommentInput()
 		if cancelled {
 			return cancelled, "", nil

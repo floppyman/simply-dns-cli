@@ -30,6 +30,8 @@ var options = createOptions{
 	Comment:  "",
 }
 
+const NoCommentValue = "<{NO_COMMENT}>"
+
 func init() {
 	CreateCmd.Flags().StringVarP(&options.Domain, "domain", "d", "", "TLD name to create record under, ex: domain.com")
 	CreateCmd.Flags().StringVarP(&options.Type, "type", "t", "", "Type of record to create")
@@ -37,7 +39,7 @@ func init() {
 	CreateCmd.Flags().StringVarP(&options.Name, "name", "n", "", "Name of the record (sub domain), ex: 'example.domain.com' but without '.domain.com'")
 	CreateCmd.Flags().StringVarP(&options.Data, "data", "v", "", "Data of the record, ex: Destination IP")
 	CreateCmd.Flags().IntVarP(&options.Priority, "priority", "p", 0, "Priority of the MX record, only used with MX type else ignored")
-	CreateCmd.Flags().StringVarP(&options.Comment, "comment", "c", "", "Comment for the record")
+	CreateCmd.Flags().StringVarP(&options.Comment, "comment", "c", NoCommentValue, "Comment for the record")
 }
 
 func handleArgs(cmd *cobra.Command, args []string) error {

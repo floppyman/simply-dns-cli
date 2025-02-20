@@ -8,30 +8,38 @@ import (
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
-type GenericSelectModel struct {
-	headerText string
-	cancelForm bool
-	Choices    []string
-	Values     []any
-	selected   int
-}
+type (
+	GenericSelectModelInput struct {
+		HeaderText   string
+		Choices      []string
+		Values       []any
+		InitialValue int
+	}
 
-func InitGenericSelectModel(headerText string, choices []string, values []any) GenericSelectModel {
-	//goland:noinspection SpellCheckingInspection
-	return GenericSelectModel{
-		headerText: headerText,
-		Choices:    choices,
-		Values:     values,
+	GenericSelectModel struct {
+		GenericSelectModelInput
+		cancelForm   bool
+		finishedForm bool
+		selected     int
 	}
-}
-func InitGenericSelectModelWithDefault(headerText string, defSelected int, choices []string, values []any) GenericSelectModel {
-	//goland:noinspection SpellCheckingInspection
-	return GenericSelectModel{
-		headerText: headerText,
-		Choices:    choices,
-		Values:     values,
-		selected:   defSelected,
+)
+
+func InitGenericSelectModel(model GenericSelectModelInput) GenericSelectModel {
+	res := GenericSelectModel{
+		GenericSelectModelInput: model,
+		cancelForm:              false,
+		finishedForm:            false,
+		selected:                model.InitialValue,
 	}
+
+	if res.selected < 0 {
+		res.selected = 0
+	}
+	if res.selected > len(model.Choices) {
+		res.selected = len(model.Choices) - 1
+	}
+
+	return res
 }
 
 func (m GenericSelectModel) Init() tea.Cmd {
@@ -53,6 +61,7 @@ func (m GenericSelectModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 
 		case tea.KeyEnter.String(): // choose selected
+			m.finishedForm = true
 			return m, tea.Quit
 
 		case tea.KeyEsc.String(), tea.KeyCtrlC.String(): // cancel form
@@ -64,17 +73,26 @@ func (m GenericSelectModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m GenericSelectModel) View() string {
-	s := fmt.Sprintf("%s\n", styles.Header(m.headerText))
+	if m.finishedForm {
+		s := fmt.Sprintf("%s %s", styles.Header(m.HeaderText), m.Choices[m.selected])
+		s += "\n"
+		return s
+	}
+
+	s := fmt.Sprintf("%s", styles.Header(m.HeaderText))
 
 	for i, choice := range m.Choices {
 		cursor := " "
+
+		s += "\n"
+
 		if m.selected == i {
 			cursor = ">"
-			s += fmt.Sprintf("%s\n", styles.Input(fmt.Sprintf("%s %s", cursor, choice)))
+			s += fmt.Sprintf("%s", styles.Input(fmt.Sprintf("%s %s", cursor, choice)))
 			continue
 		}
 
-		s += fmt.Sprintf("%s\n", styles.Normal(fmt.Sprintf("%s %s", cursor, choice)))
+		s += fmt.Sprintf("%s", styles.Normal(fmt.Sprintf("%s %s", cursor, choice)))
 	}
 
 	return s

@@ -24,16 +24,16 @@ func handleArgs(cmd *cobra.Command, args []string) error {
 func cmdRun(_ *cobra.Command, _ []string) {
 	products := shared.PullProductsAndDnsRecords()
 	if products == nil {
-		styles.FailPrint("failed to get products")
+		styles.FailPrint("Failed to get products")
 		return
 	}
 
-	styles.WaitPrint("saving to backup file")
+	styles.WaitPrint("Saving to backup file")
 	fileName, err := SaveBackup(products, time.Now())
 	if err != nil {
-		styles.FailPrint("failed to save backup")
-		styles.FailPrint("error: %v", err)
+		styles.FailPrint("Failed to save backup")
+		styles.FailPrint("Error: %v", err)
 		return
 	}
-	styles.SuccessPrint("backup file saved, name: %s", fileName)
+	styles.SuccessPrint("Backup file saved, name: %s", fileName)
 }

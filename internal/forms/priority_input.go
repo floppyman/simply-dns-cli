@@ -1,6 +1,7 @@
 package forms
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 
@@ -13,7 +14,7 @@ import (
 
 func RunPriorityInput() (bool, *jsons.JsonInt32) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
-		HeaderText:      "Priority",
+		HeaderText:      fmt.Sprintf("%-*s", longestHeader, "Priority:"),
 		PlaceHolderText: "Ex. 10",
 		ValueCharLimit:  255,
 		InitialValue:    "",

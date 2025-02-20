@@ -1,6 +1,7 @@
 package forms
 
 import (
+	"fmt"
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -11,8 +12,8 @@ import (
 
 func RunNameInput() (bool, string) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
-		HeaderText:      "Name:",
-		PlaceHolderText: "Ex. host.domain.com",
+		HeaderText:      fmt.Sprintf("%-*s", longestHeader, "Name:"),
+		PlaceHolderText: "Ex. sub-domain",
 		ValueCharLimit:  128,
 		IsRequired:      false,
 		InputValidator:  validateNameInput,

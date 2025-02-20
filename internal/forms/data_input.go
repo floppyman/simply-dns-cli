@@ -1,6 +1,7 @@
 package forms
 
 import (
+	"fmt"
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -11,7 +12,7 @@ import (
 
 func RunDataInput() (bool, string) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
-		HeaderText:      "Data:",
+		HeaderText:      fmt.Sprintf("%-*s", longestHeader, "Data:"),
 		PlaceHolderText: "Ex. 127.0.0.1",
 		ValueCharLimit:  255,
 		IsRequired:      true,

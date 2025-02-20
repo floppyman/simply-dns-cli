@@ -10,12 +10,16 @@ import (
 )
 
 type (
+	GenericBooleanModelInput struct {
+		HeaderText   string
+		InitialValue bool
+		Mode         BooleanMode
+	}
 	GenericBooleanModel struct {
-		headerText string
+		GenericBooleanModelInput
 		cancelForm bool
 		choices    []string
 		selected   bool
-		mode       BooleanMode
 	}
 	BooleanMode int
 )
@@ -32,22 +36,22 @@ var (
 	gbmAcceptDeclineChoices = []string{"Accept", "Decline"}
 )
 
-func InitGenericBooleanModel(headerText string, mode BooleanMode, initialValue bool) GenericBooleanModel {
+func InitGenericBooleanModel(model GenericBooleanModelInput) GenericBooleanModel {
 	//goland:noinspection SpellCheckingInspection
-	model := GenericBooleanModel{
-		headerText: headerText,
-		selected:   initialValue,
-		mode:       mode,
+	res := GenericBooleanModel{
+		GenericBooleanModelInput: model,
+		cancelForm:               false,
+		selected:                 model.InitialValue,
 	}
-	switch mode {
+	switch model.Mode {
 	case GbmYesNo:
-		model.choices = gbmYesNoChoices
+		res.choices = gbmYesNoChoices
 	case GbmTrueFalse:
-		model.choices = gbmTrueFalseChoices
+		res.choices = gbmTrueFalseChoices
 	case GbmAcceptDecline:
-		model.choices = gbmAcceptDeclineChoices
+		res.choices = gbmAcceptDeclineChoices
 	}
-	return model
+	return res
 }
 
 func (m GenericBooleanModel) Init() tea.Cmd {
@@ -80,7 +84,7 @@ func (m GenericBooleanModel) View() string {
   %s
   %s
 `,
-		styles.Header(m.headerText),
+		styles.Header(m.HeaderText),
 		ext.Iif(m.selected, styles.Input(m.choices[0]), styles.Normal(m.choices[0])),
 		ext.Iif(!m.selected, styles.Input(m.choices[1]), styles.Normal(m.choices[1])),
 	)

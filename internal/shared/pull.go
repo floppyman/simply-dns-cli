@@ -13,26 +13,37 @@ func PullProductsAndDnsRecords() []*api.SimplyProduct {
 		return nil
 	}
 
-	styles.WaitPrint("getting dns records from each product")
+	styles.WaitPrint("Getting DNS records from each product")
 	for _, product := range products {
 		product = PullDnsRecordsForProduct(product, "  ")
 	}
-	styles.SuccessPrint("dns records downloaded")
+	styles.SuccessPrint("DNS records downloaded")
 
 	return products
 }
 
 func PullProducts() []*api.SimplyProduct {
-	styles.WaitPrint("getting products from account")
+	styles.WaitPrint("Getting products from account")
 	products, err := api.GetProducts()
 	if err != nil {
-		styles.FailPrint("failed to get products")
-		styles.FailPrint("error: %v", err)
+		styles.FailPrint("Failed to get products")
+		styles.FailPrint("Error: %v", err)
 		return nil
 	}
-	styles.SuccessPrint("products downloaded")
+	styles.SuccessPrint("Products downloaded")
 
 	return products
+}
+
+func PullDnsRecords(productObject string, printPrefix string) []*api.SimplyDnsRecord {
+	styles.WaitPrint("Getting dns records for '%s'", productObject)
+	records, err := api.GetDnsRecords(productObject)
+	if err != nil {
+		styles.WarnPrint(fmt.Sprintf("%s%s >> %v", printPrefix, productObject, err.Error()))
+		return nil
+	}
+
+	return records
 }
 
 func PullDnsRecordsForProduct(product *api.SimplyProduct, printPrefix string) *api.SimplyProduct {

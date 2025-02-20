@@ -44,8 +44,8 @@ func SaveBackup(data []*api.SimplyProduct, now time.Time) (string, error) {
 		return fileName, nil
 	}
 
-	styles.FailPrint("homeErr: %v", homeErr)
-	styles.FailPrint("localErr: %v", localErr)
+	styles.FailPrint("HomeErr: %v", homeErr)
+	styles.FailPrint("LocalErr: %v", localErr)
 	return "", fmt.Errorf("")
 }
 

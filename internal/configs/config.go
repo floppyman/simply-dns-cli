@@ -25,7 +25,7 @@ type ConfigSimplyApi struct {
 var Main *Config
 
 func InitConfig() error {
-	styles.WaitPrint("loading config")
+	styles.WaitPrint("Loading config")
 
 	var usr *user.User
 	var err error
@@ -46,8 +46,8 @@ func InitConfig() error {
 	Main, err = configuration.LoadJson(homeConfigPath, &cfgDef, false, "")
 	if err != nil {
 		if configFolderExists {
-			styles.FailPrint("failed to load config file from '%s'", homeConfigPath)
-			styles.FailPrint("error: %v", err)
+			styles.FailPrint("Failed to load config file from '%s'", homeConfigPath)
+			styles.FailPrint("Error: %v", err)
 			return err
 		}
 
@@ -55,8 +55,8 @@ func InitConfig() error {
 			var localConfigPath = path.Join("./", configFileName)
 			Main, err = configuration.LoadJson(localConfigPath, &cfgDef, false, "")
 			if err != nil {
-				styles.FailPrint("failed to load config file from '%s'", localConfigPath)
-				styles.FailPrint("error: %v", err)
+				styles.FailPrint("Failed to load config file from '%s'", localConfigPath)
+				styles.FailPrint("Error: %v", err)
 				return err
 			}
 		}
@@ -77,7 +77,7 @@ func initDefaultConfig() Config {
 
 func testConfig() error {
 	hasErr := false
-	styles.BlankPrint("testing config")
+	styles.BlankPrint("Testing config")
 
 	if Main.SimplyApi.Url == "" {
 		hasErr = true
@@ -95,9 +95,9 @@ func testConfig() error {
 	}
 
 	if hasErr {
-		styles.FailPrint("config loaded but testing failed")
+		styles.FailPrint("Config loaded but testing failed")
 		return errors.New("")
 	}
-	styles.SuccessPrint("config loaded and testing success")
+	styles.SuccessPrint("Config loaded and testing success")
 	return nil
 }

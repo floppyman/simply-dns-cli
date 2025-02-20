@@ -1,6 +1,7 @@
 package forms
 
 import (
+	"fmt"
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -25,7 +26,13 @@ func RunTtlSelect() (bool, api.DnsRecordTTL) {
 		int(api.DnsRecTTLHours12),
 		int(api.DnsRecTTLHours24),
 	}
-	p := tea.NewProgram(gf.InitGenericSelectModelWithDefault("Select TTL:", 1, choices, values))
+	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
+		HeaderText:   fmt.Sprintf("%-*s", longestHeader, "TTL:"),
+		Choices:      choices,
+		Values:       values,
+		InitialValue: 1,
+	})
+	p := tea.NewProgram(model)
 	m, err := p.Run()
 	if err != nil {
 		log.Errorln("tea failed, ", err)

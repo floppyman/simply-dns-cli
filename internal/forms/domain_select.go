@@ -1,6 +1,7 @@
 package forms
 
 import (
+	"fmt"
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -14,7 +15,13 @@ func RunDomainSelect(choices []string) (bool, string) {
 	for _, choice := range choices {
 		values = append(values, choice)
 	}
-	p := tea.NewProgram(gf.InitGenericSelectModelWithDefault("Select Domain:", 0, choices, values))
+	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
+		HeaderText:   fmt.Sprintf("%-*s", longestHeader, "Domain:"),
+		Choices:      choices,
+		Values:       values,
+		InitialValue: 0,
+	})
+	p := tea.NewProgram(model)
 	m, err := p.Run()
 	if err != nil {
 		log.Errorln("tea failed, ", err)

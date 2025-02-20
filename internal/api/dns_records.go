@@ -29,6 +29,40 @@ const (
 	DnsRecTypeTXT    DnsRecordType = "TXT"
 )
 
+func DnsTypeToText(dnsType DnsRecordType) string {
+	switch dnsType {
+	case DnsRecTypeA:
+		return "A"
+	case DnsRecTypeAAAA:
+		return "AAAA"
+	case DnsRecTypeALIAS:
+		return "ALIAS"
+	case DnsRecTypeCAA:
+		return "CAA"
+	case DnsRecTypeCNAME:
+		return "CNAME"
+	case DnsRecTypeDNSKEY:
+		return "DNSKEY"
+	case DnsRecTypeDS:
+		return "DS"
+	case DnsRecTypeHTTPS:
+		return "HTTPS"
+	case DnsRecTypeLOC:
+		return "LOC"
+	case DnsRecTypeMX:
+		return "MX"
+	case DnsRecTypeNS:
+		return "NS"
+	case DnsRecTypeSSHFP:
+		return "SSHFP"
+	case DnsRecTypeTLSA:
+		return "TLSA"
+	case DnsRecTypeTXT:
+		return "TXT"
+	}
+	return "--"
+}
+
 type DnsRecordTTL int
 
 const (
@@ -52,6 +86,21 @@ func DnsTTLToText(ttl DnsRecordTTL) string {
 		return "12 Hours"
 	case DnsRecTTLHours24:
 		return "24 Hours"
+	}
+	return ""
+}
+func DnsTTLToNumberText(ttl DnsRecordTTL) string {
+	switch ttl {
+	case DnsRecTTLMin10:
+		return fmt.Sprintf("%d", int(DnsRecTTLMin10))
+	case DnsRecTTLHour1:
+		return fmt.Sprintf("%d", int(DnsRecTTLHour1))
+	case DnsRecTTLHours6:
+		return fmt.Sprintf("%d", int(DnsRecTTLHours6))
+	case DnsRecTTLHours12:
+		return fmt.Sprintf("%d", int(DnsRecTTLHours12))
+	case DnsRecTTLHours24:
+		return fmt.Sprintf("%d", int(DnsRecTTLHours24))
 	}
 	return ""
 }
