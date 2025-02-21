@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/umbrella-sh/simply-dns-cli/internal/api"
-	"github.com/umbrella-sh/simply-dns-cli/internal/forms"
+	"github.com/umbrella-sh/simply-dns-cli/internal/collectors"
 	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
@@ -17,11 +17,12 @@ func cmdRun(_ *cobra.Command, _ []string) {
 	styles.Println(styles.Info("Add new dns record"))
 	styles.Blank()
 
-	cancelled, domain := collectDomain()
+	cancelled, domain := collectors.CollectDomain(options.Domain)
 	if cancelled {
 		printCancelText()
 		return
 	}
+	styles.Blank()
 
 	records := shared.PullDnsRecords(domain, "")
 	if records == nil {
@@ -63,27 +64,6 @@ func cmdRun(_ *cobra.Command, _ []string) {
 	table.SetHeaderAlignment(tablewriter.ALIGN_LEFT)
 	table.AppendBulk(rows) // Add Bulk Data
 	table.Render()
-}
-
-func collectDomain() (cancelled bool, domain string) {
-	if options.Domain == "" {
-		products := shared.PullProducts()
-		var objNames = make([]string, 0)
-		for _, product := range products {
-			objNames = append(objNames, product.Object)
-		}
-		styles.Blank()
-
-		cancelled, domain = forms.RunDomainSelect(objNames)
-		if cancelled {
-			return cancelled, ""
-		}
-		styles.Blank()
-	} else {
-		domain = options.Domain
-	}
-
-	return
 }
 
 func printCancelText() { styles.Println(styles.Warn("\nList was cancelled\n")) }

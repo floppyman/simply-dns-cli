@@ -24,8 +24,10 @@ type ConfigSimplyApi struct {
 
 var Main *Config
 
-func InitConfig() error {
-	styles.WaitPrint("Loading config")
+func InitConfig(doLogging bool) error {
+	if doLogging {
+		styles.WaitPrint("Loading config")
+	}
 
 	var usr *user.User
 	var err error
@@ -62,7 +64,7 @@ func InitConfig() error {
 		}
 	}
 
-	return testConfig()
+	return testConfig(doLogging)
 }
 
 func initDefaultConfig() Config {
@@ -75,9 +77,11 @@ func initDefaultConfig() Config {
 	}
 }
 
-func testConfig() error {
+func testConfig(doLogging bool) error {
 	hasErr := false
-	styles.BlankPrint("Testing config")
+	if doLogging {
+		styles.BlankPrint("Testing config")
+	}
 
 	if Main.SimplyApi.Url == "" {
 		hasErr = true
@@ -98,6 +102,8 @@ func testConfig() error {
 		styles.FailPrint("Config loaded but testing failed")
 		return errors.New("")
 	}
-	styles.SuccessPrint("Config loaded and testing success")
+	if doLogging {
+		styles.SuccessPrint("Config loaded and testing success")
+	}
 	return nil
 }

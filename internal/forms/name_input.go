@@ -10,9 +10,11 @@ import (
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
 )
 
+var NameInputHeader = fmt.Sprintf("%-*s", longestHeader, "Name:")
+
 func RunNameInput() (bool, string) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
-		HeaderText:      fmt.Sprintf("%-*s", longestHeader, "Name:"),
+		HeaderText:      NameInputHeader,
 		PlaceHolderText: "Ex. sub-domain",
 		ValueCharLimit:  128,
 		IsRequired:      false,

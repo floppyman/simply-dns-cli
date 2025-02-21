@@ -12,9 +12,11 @@ import (
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
 )
 
+var PriorityInputHeader = fmt.Sprintf("%-*s", longestHeader, "Priority:")
+
 func RunPriorityInput() (bool, *jsons.JsonInt32) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
-		HeaderText:      fmt.Sprintf("%-*s", longestHeader, "Priority:"),
+		HeaderText:      PriorityInputHeader,
 		PlaceHolderText: "Ex. 10",
 		ValueCharLimit:  255,
 		InitialValue:    "",

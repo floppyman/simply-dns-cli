@@ -18,6 +18,7 @@ const (
 	yellow1Color       = lipgloss.Color("226")
 	cyan1Color         = lipgloss.Color("51")
 	green1Color        = lipgloss.Color("46")
+	orange1Color       = lipgloss.Color("214")
 )
 
 var (
@@ -32,10 +33,14 @@ var (
 	styleInfo         = lipgloss.NewStyle().Foreground(cyan1Color).Render
 	styleWarn         = lipgloss.NewStyle().Foreground(yellow1Color).Render
 	styleSuccess      = lipgloss.NewStyle().Foreground(green1Color).Render
+	styleProgramTitle = lipgloss.NewStyle().Foreground(orange1Color).Render
 )
 
-func Print(text string)                             { fmt.Print(text) }
-func Println(text string)                           { fmt.Println(text) }
+func Print(text string)   { fmt.Print(text) }
+func Println(text string) { fmt.Println(text) }
+func ProgramTitle(format string, a ...interface{}) string {
+	return styleProgramTitle(fmt.Sprintf(format, a...))
+}
 func Header(format string, a ...interface{}) string { return styleHeader(fmt.Sprintf(format, a...)) }
 func Input(format string, a ...interface{}) string  { return styleInput(fmt.Sprintf(format, a...)) }
 func Normal(format string, a ...interface{}) string { return styleNormal(fmt.Sprintf(format, a...)) }

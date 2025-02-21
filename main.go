@@ -9,17 +9,20 @@ import (
 var (
 	Version   = "0.0.0"
 	BuildDate = "now"
+	Debug     = false
 )
 
 func main() {
 	printHeader()
 
-	err := configs.InitConfig()
+	err := configs.InitConfig(Debug)
 	if err != nil {
 		styles.FailPrint("Be sure to create a 'config.json' either in '~/.config/%s/' or besides the executable", configs.AppName)
 		return
 	}
-	styles.Blank()
+	if Debug {
+		styles.Blank()
+	}
 
 	// https://github.com/spf13/cobra/blob/v1.8.0/site/content/user_guide.md
 	_ = cmd.RootExecute()
@@ -28,7 +31,7 @@ func main() {
 
 func printHeader() {
 	styles.Blank()
-	styles.Print(styles.Info(configs.AppNameTitle))
+	styles.Print(styles.ProgramTitle(configs.AppNameTitle))
 	styles.Print(styles.GraphicLight(" v%s", Version))
 	styles.Println(styles.Graphic(" @ %s", BuildDate))
 	styles.Blank()

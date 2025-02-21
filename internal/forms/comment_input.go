@@ -10,9 +10,11 @@ import (
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
 )
 
+var CommentInputHeader = fmt.Sprintf("%-*s", longestHeader, "Comment:")
+
 func RunCommentInput() (bool, string) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
-		HeaderText:      fmt.Sprintf("%-*s", longestHeader, "Comment:"),
+		HeaderText:      CommentInputHeader,
 		PlaceHolderText: "",
 		ValueCharLimit:  255,
 		IsRequired:      false,

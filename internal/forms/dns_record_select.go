@@ -10,15 +10,11 @@ import (
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
 )
 
-var DomainSelectHeader = fmt.Sprintf("%-*s", longestHeader, "Domain:")
+var DnsRecordSelectHeader = fmt.Sprintf("%-*s", longestHeader, "Dns Record:")
 
-func RunDomainSelect(choices []string) (bool, string) {
-	values := make([]any, 0)
-	for _, choice := range choices {
-		values = append(values, choice)
-	}
+func RunDnsRecordSelect(choices []string, values []any) (bool, int64) {
 	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
-		HeaderText:   DomainSelectHeader,
+		HeaderText:   DnsRecordSelectHeader,
 		Choices:      choices,
 		Values:       values,
 		InitialValue: 0,
@@ -30,7 +26,7 @@ func RunDomainSelect(choices []string) (bool, string) {
 		os.Exit(1)
 	}
 	if m, ok := m.(gf.GenericSelectModel); ok && !m.InputCancelled() {
-		return false, m.Values[m.SelectedIndex()].(string)
+		return false, m.Values[m.SelectedIndex()].(int64)
 	}
-	return true, ""
+	return true, 0
 }

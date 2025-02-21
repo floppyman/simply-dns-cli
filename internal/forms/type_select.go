@@ -11,6 +11,8 @@ import (
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
 )
 
+var TypeSelectHeader = fmt.Sprintf("%-*s", longestHeader, "Entry Type:")
+
 func RunTypeSelect() (bool, api.DnsRecordType) {
 	choices := []string{
 		string(api.DnsRecTypeA),
@@ -45,7 +47,7 @@ func RunTypeSelect() (bool, api.DnsRecordType) {
 		api.DnsRecTypeTXT,
 	}
 	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
-		HeaderText:   fmt.Sprintf("%-*s", longestHeader, "Entry Type:"),
+		HeaderText:   TypeSelectHeader,
 		Choices:      choices,
 		Values:       values,
 		InitialValue: 0,

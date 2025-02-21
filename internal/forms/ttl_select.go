@@ -11,6 +11,8 @@ import (
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
 )
 
+var TtlSelectHeader = fmt.Sprintf("%-*s", longestHeader, "TTL:")
+
 func RunTtlSelect() (bool, api.DnsRecordTTL) {
 	choices := []string{
 		"10 Minutes",
@@ -27,7 +29,7 @@ func RunTtlSelect() (bool, api.DnsRecordTTL) {
 		int(api.DnsRecTTLHours24),
 	}
 	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
-		HeaderText:   fmt.Sprintf("%-*s", longestHeader, "TTL:"),
+		HeaderText:   TtlSelectHeader,
 		Choices:      choices,
 		Values:       values,
 		InitialValue: 1,

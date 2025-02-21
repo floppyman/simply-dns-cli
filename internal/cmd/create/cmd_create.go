@@ -7,6 +7,7 @@ import (
 	"github.com/umbrella-sh/um-common/jsons"
 
 	"github.com/umbrella-sh/simply-dns-cli/internal/api"
+	"github.com/umbrella-sh/simply-dns-cli/internal/collectors"
 	"github.com/umbrella-sh/simply-dns-cli/internal/forms"
 	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
@@ -22,13 +23,14 @@ func cmdRun(_ *cobra.Command, _ []string) {
 		return
 	}
 
+	styles.Blank()
 	var accepted bool
-	cancelled, accepted = acceptInfo()
-
+	cancelled, accepted = collectors.AcceptInfo()
 	if !accepted {
 		printNotAcceptedText()
 		return
 	}
+	styles.Blank()
 
 	createRecord(domain, record)
 }
@@ -47,33 +49,12 @@ func createRecord(domain string, record *api.SimplyDnsRecord) {
 	styles.SuccessPrint("DNS Entry created on %s", domain)
 }
 
-func acceptInfo() (cancelled bool, accepted bool) {
-	styles.Blank()
-	cancelled, accepted = forms.RunAcceptInput()
-	if cancelled {
-		return cancelled, accepted
-	}
-	styles.Blank()
-	return cancelled, accepted
-}
-
 func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) {
 	record = &api.SimplyDnsRecord{}
 
-	if options.Domain == "" {
-		products := shared.PullProducts()
-		var objNames = make([]string, 0)
-		for _, product := range products {
-			objNames = append(objNames, product.Object)
-		}
-		styles.Blank()
-
-		cancelled, domain = forms.RunDomainSelect(objNames)
-		if cancelled {
-			return cancelled, "", nil
-		}
-	} else {
-		domain = options.Domain
+	cancelled, domain = collectors.CollectDomain(options.Domain)
+	if cancelled {
+		return cancelled, "", nil
 	}
 
 	if options.Type == "" {
@@ -83,6 +64,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 		}
 	} else {
 		record.Type = api.DnsRecordType(options.Type)
+		shared.PrintValue(forms.TypeSelectHeader, api.DnsTypeToText(record.Type))
 	}
 
 	if options.TTL <= 0 {
@@ -92,6 +74,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 		}
 	} else {
 		record.TTL = api.DnsRecordTTL(options.TTL)
+		shared.PrintValue(forms.TtlSelectHeader, api.DnsTTLToText(record.TTL))
 	}
 
 	if options.Name == "" {
@@ -103,6 +86,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 		record.Name = fmt.Sprintf("%s.%s", name, domain)
 	} else {
 		record.Name = fmt.Sprintf("%s.%s", options.Name, domain)
+		shared.PrintValue(forms.NameInputHeader, record.Name)
 	}
 
 	if options.Data == "" {
@@ -112,6 +96,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 		}
 	} else {
 		record.Data = options.Data
+		shared.PrintValue(forms.DataInputHeader, record.Data)
 	}
 
 	if record.Type == api.DnsRecTypeMX {
@@ -122,6 +107,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 			}
 		} else {
 			record.Priority = jsons.NewJsonInt32(int32(options.Priority))
+			shared.PrintValue(forms.PriorityInputHeader, record.Priority.ToString())
 		}
 	} else {
 		record.Priority = jsons.NullJsonInt32()
@@ -134,6 +120,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 		}
 	} else {
 		record.Comment = options.Comment
+		shared.PrintValue(forms.CommentInputHeader, record.Comment)
 	}
 
 	return cancelled, domain, record
