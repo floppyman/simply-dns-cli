@@ -7,17 +7,21 @@ import (
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
-func PullProductsAndDnsRecords() []*api.SimplyProduct {
+func PullProductsAndDnsRecords() map[string]*api.SimplyProduct {
 	products := PullProducts()
 	if products == nil {
 		return nil
 	}
+
 	styles.WaitPrint("Getting DNS records from each product")
+	var res = make(map[string]*api.SimplyProduct)
 	for _, product := range products {
-		product = PullDnsRecordsForProduct(product, "  ")
+		res[product.Object] = product
+		res[product.Object].DnsRecords = PullDnsRecordsForProduct(product, "  ")
 	}
+
 	styles.SuccessPrint("DNS records downloaded")
-	return products
+	return res
 }
 
 func PullProducts() []*api.SimplyProduct {
@@ -28,6 +32,7 @@ func PullProducts() []*api.SimplyProduct {
 		styles.FailPrint("Error: %v", err)
 		return nil
 	}
+
 	styles.SuccessPrint("Products downloaded")
 	return products
 }
@@ -49,18 +54,17 @@ func PullDnsRecords(productObject string, printPrefix string) []*api.SimplyDnsRe
 		styles.FailPrint("Error: %v", err)
 		return nil
 	}
+
 	styles.SuccessPrint("DNS records downloaded")
 	return records
 }
 
-func PullDnsRecordsForProduct(product *api.SimplyProduct, printPrefix string) *api.SimplyProduct {
+func PullDnsRecordsForProduct(product *api.SimplyProduct, printPrefix string) []*api.SimplyDnsRecord {
 	styles.BlankPrint(fmt.Sprintf("%s%s", printPrefix, product.Name))
 	records, err := api.GetDnsRecords(product.Object)
 	if err != nil {
 		styles.WarnPrint(fmt.Sprintf("%s%s >> %v", printPrefix, product.Name, err))
-		product.DnsRecords = make([]*api.SimplyDnsRecord, 0)
-		return product
+		return make([]*api.SimplyDnsRecord, 0)
 	}
-	product.DnsRecords = records
-	return product
+	return records
 }

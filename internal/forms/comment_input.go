@@ -12,13 +12,14 @@ import (
 
 var CommentInputHeader = fmt.Sprintf("%-*s", longestHeader, "Comment:")
 
-func RunCommentInput() (bool, string) {
+func RunCommentInput(initialValue string) (bool, string) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
 		HeaderText:      CommentInputHeader,
 		PlaceHolderText: "",
 		ValueCharLimit:  255,
+		InitialValue:    initialValue,
 		IsRequired:      false,
-		InputValidator:  validateDataInput,
+		InputValidator:  validateCommentInput,
 		InputConverter:  nil,
 	}))
 	m, err := p.Run()

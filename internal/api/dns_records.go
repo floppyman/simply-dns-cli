@@ -1,7 +1,9 @@
 package api
 
 import (
+	"crypto/sha256"
 	"fmt"
+	"strconv"
 
 	"github.com/umbrella-sh/um-common/ext"
 	"github.com/umbrella-sh/um-common/jsons"
@@ -151,4 +153,21 @@ func (r SimplyDnsRecord) Print(prefix string) {
 		prefix, styles.GraphicLight("Data:    "), styles.Value(r.Data),
 		prefix, styles.GraphicLight("Priority:"), styles.Value(ext.Iif(r.Priority.Valid, string(r.Priority.Value), "<not applicable for Type>")),
 		prefix, styles.GraphicLight("Comment: "), styles.Value(ext.Iif(len(r.Comment) > 0, r.Comment, "<no comment>")))
+}
+
+func (r SimplyDnsRecord) GetHash() string {
+	data := fmt.Sprintf(
+		"%s||%s||%s||%s||%s||%s",
+		DnsTypeToText(r.Type),
+		r.Name,
+		r.Data,
+		DnsTTLToText(r.TTL),
+		strconv.Itoa(int(ext.Iif(r.Priority.Valid, r.Priority.Value, -1))),
+		r.Comment,
+	)
+	h := sha256.New()
+	h.Write([]byte(data))
+	res := make([]byte, 0)
+	res = h.Sum(res)
+	return string(res)
 }

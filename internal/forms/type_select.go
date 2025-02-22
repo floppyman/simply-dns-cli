@@ -9,11 +9,12 @@ import (
 
 	"github.com/umbrella-sh/simply-dns-cli/internal/api"
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
+	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 )
 
 var TypeSelectHeader = fmt.Sprintf("%-*s", longestHeader, "Entry Type:")
 
-func RunTypeSelect() (bool, api.DnsRecordType) {
+func RunTypeSelect(initialValue api.DnsRecordType) (bool, api.DnsRecordType) {
 	choices := []string{
 		string(api.DnsRecTypeA),
 		string(api.DnsRecTypeAAAA),
@@ -50,7 +51,7 @@ func RunTypeSelect() (bool, api.DnsRecordType) {
 		HeaderText:   TypeSelectHeader,
 		Choices:      choices,
 		Values:       values,
-		InitialValue: 0,
+		InitialValue: shared.Index(values, initialValue),
 	})
 	p := tea.NewProgram(model)
 	m, err := p.Run()

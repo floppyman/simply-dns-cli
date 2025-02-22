@@ -7,15 +7,14 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	log "github.com/umbrella-sh/um-common/logging/basic"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/api"
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
 )
 
-var DnsRecordSelectHeader = fmt.Sprintf("%-*s", longestHeader, "Dns Record:")
+var BackupNameSelectHeader = fmt.Sprintf("%-*s", longestHeader, "Backup name:")
 
-func RunDnsRecordSelect(choices []string, values []any) (bool, *api.SimplyDnsRecord) {
+func RunBackupNameSelect(choices []string, values []any) (bool, string) {
 	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
-		HeaderText:   DnsRecordSelectHeader,
+		HeaderText:   BackupNameSelectHeader,
 		Choices:      choices,
 		Values:       values,
 		InitialValue: 0,
@@ -27,7 +26,7 @@ func RunDnsRecordSelect(choices []string, values []any) (bool, *api.SimplyDnsRec
 		os.Exit(1)
 	}
 	if m, ok := m.(gf.GenericSelectModel); ok && !m.InputCancelled() {
-		return false, m.Values[m.SelectedIndex()].(*api.SimplyDnsRecord)
+		return false, m.Values[m.SelectedIndex()].(string)
 	}
-	return true, nil
+	return true, ""
 }

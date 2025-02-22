@@ -3,6 +3,7 @@ package remove
 import (
 	"github.com/spf13/cobra"
 
+	"github.com/umbrella-sh/simply-dns-cli/internal/api"
 	"github.com/umbrella-sh/simply-dns-cli/internal/collectors"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
@@ -18,14 +19,13 @@ func cmdRun(_ *cobra.Command, _ []string) {
 	}
 	styles.Blank()
 
-	cancelled, recordId := collectors.CollectDnsRecord(options.RecordId, domain)
+	cancelled, record := collectors.CollectDnsRecord(options.RecordId, domain)
 	if cancelled {
 		printCancelText()
 		return
 	}
 	styles.Blank()
 
-	styles.Blank()
 	var accepted bool
 	cancelled, accepted = collectors.AcceptInfo()
 	if !accepted {
@@ -34,7 +34,27 @@ func cmdRun(_ *cobra.Command, _ []string) {
 	}
 	styles.Blank()
 
-	styles.Normal("%d", recordId)
+	removeRecord(domain, record.RecordId)
+}
+
+//goland:noinspection GoNameStartsWithPackageName
+func removeRecord(domain string, recordId int64) {
+	styles.WaitPrint("Removing dns entry")
+
+	res, err := api.DeleteDnsRecord(domain, recordId)
+	if err != nil {
+		styles.FailPrint("Failed to remove DNS Entry")
+		styles.FailPrint("Error: %v", err)
+		return
+	}
+
+	if res.Status != 200 {
+		styles.FailPrint("Failed to remove DNS Entry")
+		styles.FailPrint("Error: %d, %v", res.Status, res.Message)
+		return
+	}
+
+	styles.SuccessPrint("DNS Entry removed on %s", domain)
 }
 
 func printCancelText() { styles.Println(styles.Warn("\nRemove was cancelled\n")) }

@@ -3,8 +3,6 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
 // https://www.simply.com/dk/docs/api/
@@ -51,8 +49,6 @@ func UpdateDnsRecord(productObject string, recordId int64, obj *SimplyDnsRecord)
 		return nil, err
 	}
 
-	styles.Println(styles.Graphic("UpdateDnsRecord Response, body: %s", string(res)))
-
 	var response *SimplyApiSuccessResponse
 	err = json.Unmarshal(res, &response)
 	if err != nil {
@@ -67,8 +63,6 @@ func DeleteDnsRecord(productObject string, recordId int64) (*SimplyApiSuccessRes
 	if err != nil {
 		return nil, err
 	}
-
-	styles.Println(styles.Graphic("DeleteDnsRecord Response, body: %s", string(res)))
 
 	var response *SimplyApiSuccessResponse
 	err = json.Unmarshal(res, &response)

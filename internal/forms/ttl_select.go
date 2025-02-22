@@ -9,11 +9,12 @@ import (
 
 	"github.com/umbrella-sh/simply-dns-cli/internal/api"
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
+	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 )
 
 var TtlSelectHeader = fmt.Sprintf("%-*s", longestHeader, "TTL:")
 
-func RunTtlSelect() (bool, api.DnsRecordTTL) {
+func RunTtlSelect(initialValue api.DnsRecordTTL) (bool, api.DnsRecordTTL) {
 	choices := []string{
 		"10 Minutes",
 		"1 Hour (recommended)",
@@ -22,17 +23,17 @@ func RunTtlSelect() (bool, api.DnsRecordTTL) {
 		"24 Hours",
 	}
 	values := []any{
-		int(api.DnsRecTTLMin10),
-		int(api.DnsRecTTLHour1),
-		int(api.DnsRecTTLHours6),
-		int(api.DnsRecTTLHours12),
-		int(api.DnsRecTTLHours24),
+		api.DnsRecTTLMin10,
+		api.DnsRecTTLHour1,
+		api.DnsRecTTLHours6,
+		api.DnsRecTTLHours12,
+		api.DnsRecTTLHours24,
 	}
 	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
 		HeaderText:   TtlSelectHeader,
 		Choices:      choices,
 		Values:       values,
-		InitialValue: 1,
+		InitialValue: shared.Index(values, initialValue),
 	})
 	p := tea.NewProgram(model)
 	m, err := p.Run()
@@ -41,7 +42,7 @@ func RunTtlSelect() (bool, api.DnsRecordTTL) {
 		os.Exit(1)
 	}
 	if m, ok := m.(gf.GenericSelectModel); ok && !m.InputCancelled() {
-		return false, api.DnsRecordTTL(m.Values[m.SelectedIndex()].(int))
+		return false, m.Values[m.SelectedIndex()].(api.DnsRecordTTL)
 	}
 	return true, api.DnsRecTTLHour1
 }

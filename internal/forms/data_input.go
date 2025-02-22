@@ -12,11 +12,12 @@ import (
 
 var DataInputHeader = fmt.Sprintf("%-*s", longestHeader, "Data:")
 
-func RunDataInput() (bool, string) {
+func RunDataInput(initialValue string) (bool, string) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
 		HeaderText:      DataInputHeader,
 		PlaceHolderText: "Ex. 127.0.0.1",
 		ValueCharLimit:  255,
+		InitialValue:    initialValue,
 		IsRequired:      true,
 		InputValidator:  validateDataInput,
 		InputConverter:  nil,

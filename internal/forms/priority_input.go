@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/umbrella-sh/um-common/ext"
 	"github.com/umbrella-sh/um-common/jsons"
 	log "github.com/umbrella-sh/um-common/logging/basic"
 
@@ -14,12 +15,12 @@ import (
 
 var PriorityInputHeader = fmt.Sprintf("%-*s", longestHeader, "Priority:")
 
-func RunPriorityInput() (bool, *jsons.JsonInt32) {
+func RunPriorityInput(initialValue *jsons.JsonInt32) (bool, *jsons.JsonInt32) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
 		HeaderText:      PriorityInputHeader,
 		PlaceHolderText: "Ex. 10",
 		ValueCharLimit:  255,
-		InitialValue:    "",
+		InitialValue:    ext.Iif(initialValue.Valid, strconv.Itoa(int(initialValue.Value)), ""),
 		IsRequired:      true,
 		InputValidator:  validatePriorityInput,
 		InputConverter:  convertPriorityInput,

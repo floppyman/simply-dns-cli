@@ -12,11 +12,12 @@ import (
 
 var NameInputHeader = fmt.Sprintf("%-*s", longestHeader, "Name:")
 
-func RunNameInput() (bool, string) {
+func RunNameInput(initialValue string) (bool, string) {
 	p := tea.NewProgram(gf.InitGenericInputModel(gf.GenericInputModelInput{
 		HeaderText:      NameInputHeader,
 		PlaceHolderText: "Ex. sub-domain",
 		ValueCharLimit:  128,
+		InitialValue:    initialValue,
 		IsRequired:      false,
 		InputValidator:  validateNameInput,
 		InputConverter:  nil,

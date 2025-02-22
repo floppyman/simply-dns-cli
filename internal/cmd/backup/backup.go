@@ -21,11 +21,11 @@ const backupFileName = "backup_{{ts}}.json"
 
 //goland:noinspection GoNameStartsWithPackageName
 type BackupFile struct {
-	TimeStamp time.Time            `json:"time_stamp"`
-	Items     []*api.SimplyProduct `json:"items"`
+	TimeStamp time.Time                     `json:"time_stamp"`
+	Items     map[string]*api.SimplyProduct `json:"items"`
 }
 
-func SaveBackup(data []*api.SimplyProduct, now time.Time) (string, error) {
+func SaveBackup(data map[string]*api.SimplyProduct, now time.Time) (string, error) {
 	fileName := strings.Replace(backupFileName, "{{ts}}", now.Format(types.TimeFormatIsoFullDateTimeCompact), 1)
 	backupFile := BackupFile{TimeStamp: now, Items: data}
 

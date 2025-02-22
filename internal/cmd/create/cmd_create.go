@@ -39,10 +39,16 @@ func cmdRun(_ *cobra.Command, _ []string) {
 func createRecord(domain string, record *api.SimplyDnsRecord) {
 	styles.WaitPrint("Creating dns entry")
 
-	_, err := api.CreateDnsRecord(domain, record)
+	res, err := api.CreateDnsRecord(domain, record)
 	if err != nil {
 		styles.FailPrint("Failed to create DNS Entry")
 		styles.FailPrint("Error: %v", err)
+		return
+	}
+
+	if res.Status != 200 {
+		styles.FailPrint("Failed to create DNS Entry")
+		styles.FailPrint("Error: %d, %v", res.Status, res.Message)
 		return
 	}
 
@@ -58,7 +64,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 	}
 
 	if options.Type == "" {
-		cancelled, record.Type = forms.RunTypeSelect()
+		cancelled, record.Type = forms.RunTypeSelect("")
 		if cancelled {
 			return cancelled, "", nil
 		}
@@ -68,7 +74,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 	}
 
 	if options.TTL <= 0 {
-		cancelled, record.TTL = forms.RunTtlSelect()
+		cancelled, record.TTL = forms.RunTtlSelect(api.DnsRecTTLHour1)
 		if cancelled {
 			return cancelled, "", nil
 		}
@@ -79,7 +85,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 
 	if options.Name == "" {
 		var name string
-		cancelled, name = forms.RunNameInput()
+		cancelled, name = forms.RunNameInput("")
 		if cancelled {
 			return cancelled, "", nil
 		}
@@ -90,7 +96,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 	}
 
 	if options.Data == "" {
-		cancelled, record.Data = forms.RunDataInput()
+		cancelled, record.Data = forms.RunDataInput("")
 		if cancelled {
 			return cancelled, "", nil
 		}
@@ -101,7 +107,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 
 	if record.Type == api.DnsRecTypeMX {
 		if options.Priority <= 0 {
-			cancelled, record.Priority = forms.RunPriorityInput()
+			cancelled, record.Priority = forms.RunPriorityInput(nil)
 			if cancelled {
 				return cancelled, "", nil
 			}
@@ -114,7 +120,7 @@ func collectInfo() (cancelled bool, domain string, record *api.SimplyDnsRecord) 
 	}
 
 	if options.Comment == NoCommentValue {
-		cancelled, record.Comment = forms.RunCommentInput()
+		cancelled, record.Comment = forms.RunCommentInput("")
 		if cancelled {
 			return cancelled, "", nil
 		}
