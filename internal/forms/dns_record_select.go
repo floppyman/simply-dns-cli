@@ -7,13 +7,13 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	log "github.com/umbrella-sh/um-common/logging/basic"
 
-	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
+	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
 )
 
 var DnsRecordSelectHeader = fmt.Sprintf("%-*s", longestHeader, "Dns Record:")
 
-func RunDnsRecordSelect(choices []string, values []any) (bool, *apio.SimplyDnsRecord) {
+func RunDnsRecordSelect(choices []string, values []any) (bool, *objects.SimplyDnsRecord) {
 	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
 		HeaderText:   DnsRecordSelectHeader,
 		Choices:      choices,
@@ -27,7 +27,7 @@ func RunDnsRecordSelect(choices []string, values []any) (bool, *apio.SimplyDnsRe
 		os.Exit(1)
 	}
 	if m, ok := m.(gf.GenericSelectModel); ok && !m.InputCancelled() {
-		return false, m.Values[m.SelectedIndex()].(*apio.SimplyDnsRecord)
+		return false, m.Values[m.SelectedIndex()].(*objects.SimplyDnsRecord)
 	}
 	return true, nil
 }

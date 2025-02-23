@@ -5,7 +5,7 @@ import "github.com/spf13/cobra"
 //goland:noinspection GoNameStartsWithPackageName
 var RestoreCmd = &cobra.Command{
 	Use:   "restore",
-	Short: "Generate create commands for each record that do not exist exactly already",
+	Short: "Generate create or delete commands for each record that is different between the backup and api.",
 	Args:  handleArgs,
 	Run:   cmdRun,
 }

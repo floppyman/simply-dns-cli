@@ -5,7 +5,7 @@ import "github.com/spf13/cobra"
 //goland:noinspection GoNameStartsWithPackageName
 var BackupCmd = &cobra.Command{
 	Use:   "backup",
-	Short: "Pulls all the current Domains and DNS records and stores them locally",
+	Short: "Pulls all the current Domains and DNS records from account and stores them locally.",
 	Args:  handleArgs,
 	Run:   cmdRun,
 }

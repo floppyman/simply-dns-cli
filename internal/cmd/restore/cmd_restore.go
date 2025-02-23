@@ -11,18 +11,18 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/umbrella-sh/um-common/ext"
 
-	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
 	"github.com/umbrella-sh/simply-dns-cli/internal/forms"
+	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
 func cmdRun(_ *cobra.Command, _ []string) {
-	styles.Println(styles.Info("Restore DNS records from a backup"))
+	styles.Println(styles.Info("Generating create or delete commands to restore DNS records for Domain"))
 	styles.Blank()
 
-	var file *RestoreFile
+	var file *objects.RestoreFile
 	if options.BackupFilePath != "" {
 		styles.WaitPrint("Loading backup from provided backup file")
 		file = LoadBackup(options.BackupFilePath)
@@ -82,7 +82,7 @@ func cmdRun(_ *cobra.Command, _ []string) {
 	generateCommands(domain, toCreate, toDelete)
 }
 
-func generateCommands(domain string, toCreate map[string]*apio.SimplyDnsRecord, toDelete map[string]*apio.SimplyDnsRecord) {
+func generateCommands(domain string, toCreate map[string]*objects.SimplyDnsRecord, toDelete map[string]*objects.SimplyDnsRecord) {
 	styles.WaitPrint("Generating commands to execute to restore the domain from the backup selected")
 
 	if len(toCreate) == 0 && len(toDelete) == 0 {
@@ -118,7 +118,7 @@ func generateCommands(domain string, toCreate map[string]*apio.SimplyDnsRecord, 
 	}
 
 	for _, v := range toCreate {
-		if v.Type == apio.DnsRecTypeMX {
+		if v.Type == objects.DnsRecTypeMX {
 			styles.Printf("%s%s\n",
 				styles.Graphic("%-*s | ", longestDomain, fmt.Sprintf("%s.%s", v.Name, domain)),
 				styles.Success("%s create -d %s -t %s -l %d -n %s -v %s -p %d -c %s",
@@ -152,9 +152,9 @@ func generateCommands(domain string, toCreate map[string]*apio.SimplyDnsRecord, 
 	styles.SuccessPrint("Commands generated")
 }
 
-func findChanges(localDnsRecords []*apio.SimplyDnsRecord, remoteDnsRecords []*apio.SimplyDnsRecord) (toCreate map[string]*apio.SimplyDnsRecord, toDelete map[string]*apio.SimplyDnsRecord) {
-	toCreate = make(map[string]*apio.SimplyDnsRecord)
-	toDelete = make(map[string]*apio.SimplyDnsRecord)
+func findChanges(localDnsRecords []*objects.SimplyDnsRecord, remoteDnsRecords []*objects.SimplyDnsRecord) (toCreate map[string]*objects.SimplyDnsRecord, toDelete map[string]*objects.SimplyDnsRecord) {
+	toCreate = make(map[string]*objects.SimplyDnsRecord)
+	toDelete = make(map[string]*objects.SimplyDnsRecord)
 
 	// detect new elements
 	for _, l := range localDnsRecords {
@@ -185,7 +185,7 @@ func findChanges(localDnsRecords []*apio.SimplyDnsRecord, remoteDnsRecords []*ap
 	return toCreate, toDelete
 }
 
-func collectDomainFromBackup(file *RestoreFile) (cancelled bool, domain string) {
+func collectDomainFromBackup(file *objects.RestoreFile) (cancelled bool, domain string) {
 	var objNames = make([]string, 0)
 	for k := range file.Items {
 		objNames = append(objNames, k)

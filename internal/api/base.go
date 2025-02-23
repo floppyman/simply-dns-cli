@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"net/url"
 
-	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
+	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
 )
 
 func getRequest(path string) ([]byte, error) {
@@ -22,7 +22,7 @@ func getRequest(path string) ([]byte, error) {
 	return doRequest(req)
 }
 
-func postRequest(path string, record *apio.SimplyDnsRecord) ([]byte, error) {
+func postRequest(path string, record *objects.SimplyDnsRecord) ([]byte, error) {
 	bodyBytes, err := json.Marshal(record)
 	if err != nil {
 		return nil, err
@@ -36,7 +36,7 @@ func postRequest(path string, record *apio.SimplyDnsRecord) ([]byte, error) {
 	return doRequest(req)
 }
 
-func putRequest(path string, record *apio.SimplyDnsRecord) ([]byte, error) {
+func putRequest(path string, record *objects.SimplyDnsRecord) ([]byte, error) {
 	bodyBytes, err := json.Marshal(record)
 	if err != nil {
 		return nil, err

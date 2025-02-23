@@ -4,18 +4,19 @@ import (
 	"fmt"
 
 	"github.com/umbrella-sh/simply-dns-cli/internal/api"
-	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
+	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
-func PullProductsAndDnsRecords() map[string]*apio.SimplyProduct {
+func PullProductsAndDnsRecords() map[string]*objects.SimplyProduct {
 	products := PullProducts()
 	if products == nil {
 		return nil
 	}
+	styles.Blank()
 
 	styles.WaitPrint("Getting DNS records from each product")
-	var res = make(map[string]*apio.SimplyProduct)
+	var res = make(map[string]*objects.SimplyProduct)
 	for _, product := range products {
 		res[product.Object] = product
 		res[product.Object].DnsRecords = PullDnsRecordsForProduct(product, "  ")
@@ -25,7 +26,7 @@ func PullProductsAndDnsRecords() map[string]*apio.SimplyProduct {
 	return res
 }
 
-func PullProducts() []*apio.SimplyProduct {
+func PullProducts() []*objects.SimplyProduct {
 	styles.WaitPrint("Getting products from account")
 	products, err := api.GetProducts()
 	if err != nil {
@@ -47,7 +48,7 @@ func PullProductNames() []string {
 	return objNames
 }
 
-func PullDnsRecords(productObject string, printPrefix string) []*apio.SimplyDnsRecord {
+func PullDnsRecords(productObject string, printPrefix string) []*objects.SimplyDnsRecord {
 	styles.WaitPrint("Getting dns records for '%s'", productObject)
 	records, err := api.GetDnsRecords(productObject)
 	if err != nil {
@@ -60,12 +61,12 @@ func PullDnsRecords(productObject string, printPrefix string) []*apio.SimplyDnsR
 	return records
 }
 
-func PullDnsRecordsForProduct(product *apio.SimplyProduct, printPrefix string) []*apio.SimplyDnsRecord {
+func PullDnsRecordsForProduct(product *objects.SimplyProduct, printPrefix string) []*objects.SimplyDnsRecord {
 	styles.BlankPrint(fmt.Sprintf("%s%s", printPrefix, product.Name))
 	records, err := api.GetDnsRecords(product.Object)
 	if err != nil {
 		styles.WarnPrint(fmt.Sprintf("%s%s >> %v", printPrefix, product.Name, err))
-		return make([]*apio.SimplyDnsRecord, 0)
+		return make([]*objects.SimplyDnsRecord, 0)
 	}
 	return records
 }

@@ -10,11 +10,15 @@ import (
 )
 
 func cmdRun(_ *cobra.Command, _ []string) {
+	styles.Println(styles.Info("Making a backup of Domains and DNS Records"))
+	styles.Blank()
+
 	products := shared.PullProductsAndDnsRecords()
 	if products == nil {
 		styles.FailPrint("Failed to get products")
 		return
 	}
+	styles.Blank()
 
 	styles.WaitPrint("Saving to backup file")
 	fileName, err := SaveBackup(products, time.Now())

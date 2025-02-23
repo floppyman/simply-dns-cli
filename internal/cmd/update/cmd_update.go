@@ -7,15 +7,15 @@ import (
 	"github.com/umbrella-sh/um-common/jsons"
 
 	"github.com/umbrella-sh/simply-dns-cli/internal/api"
-	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/collectors"
 	"github.com/umbrella-sh/simply-dns-cli/internal/forms"
+	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
 func cmdRun(_ *cobra.Command, _ []string) {
-	styles.Println(styles.Info("Update existing dns record"))
+	styles.Println(styles.Info("Updating an existing DNS Record on Domain"))
 	styles.Blank()
 
 	cancelled, domain, recordId, record := collectInfo()
@@ -37,7 +37,7 @@ func cmdRun(_ *cobra.Command, _ []string) {
 }
 
 //goland:noinspection GoNameStartsWithPackageName
-func updateRecord(domain string, recordId int64, record *apio.SimplyDnsRecord) {
+func updateRecord(domain string, recordId int64, record *objects.SimplyDnsRecord) {
 	styles.WaitPrint("Updating dns entry")
 
 	res, err := api.UpdateDnsRecord(domain, recordId, record)
@@ -56,8 +56,8 @@ func updateRecord(domain string, recordId int64, record *apio.SimplyDnsRecord) {
 	styles.SuccessPrint("DNS Entry updated on %s", domain)
 }
 
-func collectInfo() (cancelled bool, domain string, recordId int64, record *apio.SimplyDnsRecord) {
-	record = &apio.SimplyDnsRecord{}
+func collectInfo() (cancelled bool, domain string, recordId int64, record *objects.SimplyDnsRecord) {
+	record = &objects.SimplyDnsRecord{}
 
 	cancelled, domain = collectors.CollectDomain(options.Domain)
 	if cancelled {
@@ -78,8 +78,8 @@ func collectInfo() (cancelled bool, domain string, recordId int64, record *apio.
 			return cancelled, "", 0, nil
 		}
 	} else {
-		record.Type = apio.DnsRecordType(options.Type)
-		shared.PrintValue(forms.TypeSelectHeader, apio.DnsTypeToText(record.Type))
+		record.Type = objects.DnsRecordType(options.Type)
+		shared.PrintValue(forms.TypeSelectHeader, objects.DnsTypeToText(record.Type))
 	}
 
 	if options.TTL <= 0 {
@@ -88,8 +88,8 @@ func collectInfo() (cancelled bool, domain string, recordId int64, record *apio.
 			return cancelled, "", 0, nil
 		}
 	} else {
-		record.TTL = apio.DnsRecordTTL(options.TTL)
-		shared.PrintValue(forms.TtlSelectHeader, apio.DnsTTLToText(record.TTL))
+		record.TTL = objects.DnsRecordTTL(options.TTL)
+		shared.PrintValue(forms.TtlSelectHeader, objects.DnsTTLToText(record.TTL))
 	}
 
 	if options.Name == "" {
@@ -114,7 +114,7 @@ func collectInfo() (cancelled bool, domain string, recordId int64, record *apio.
 		shared.PrintValue(forms.DataInputHeader, record.Data)
 	}
 
-	if record.Type == apio.DnsRecTypeMX {
+	if record.Type == objects.DnsRecTypeMX {
 		if options.Priority <= 0 {
 			cancelled, record.Priority = forms.RunPriorityInput(record.Priority)
 			if cancelled {

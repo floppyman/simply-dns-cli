@@ -12,7 +12,7 @@ import (
 	"github.com/umbrella-sh/um-common/ext"
 	"github.com/umbrella-sh/um-common/types"
 
-	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
+	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
@@ -22,10 +22,10 @@ const backupFileName = "backup_{{ts}}.json"
 //goland:noinspection GoNameStartsWithPackageName
 type BackupFile struct {
 	TimeStamp time.Time                      `json:"time_stamp"`
-	Items     map[string]*apio.SimplyProduct `json:"items"`
+	Items     map[string]*objects.SimplyProduct `json:"items"`
 }
 
-func SaveBackup(data map[string]*apio.SimplyProduct, now time.Time) (string, error) {
+func SaveBackup(data map[string]*objects.SimplyProduct, now time.Time) (string, error) {
 	fileName := strings.Replace(backupFileName, "{{ts}}", now.Format(types.TimeFormatIsoFullDateTimeCompact), 1)
 	backupFile := BackupFile{TimeStamp: now, Items: data}
 

@@ -4,20 +4,20 @@ import (
 	"encoding/json"
 	"fmt"
 
-	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
+	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
 	"github.com/umbrella-sh/simply-dns-cli/internal/mocks"
 )
 
 // https://www.simply.com/dk/docs/api/
 
-var currentConfig apio.SimplyApiConfig
+var currentConfig objects.SimplyApiConfig
 
-func Init(config apio.SimplyApiConfig) {
+func Init(config objects.SimplyApiConfig) {
 	currentConfig = config
 }
 
-func GetDnsRecords(productObject string) ([]*apio.SimplyDnsRecord, error) {
+func GetDnsRecords(productObject string) ([]*objects.SimplyDnsRecord, error) {
 	if configs.IsMocking {
 		return mocks.GetDnsRecords()
 	}
@@ -27,7 +27,7 @@ func GetDnsRecords(productObject string) ([]*apio.SimplyDnsRecord, error) {
 		return nil, err
 	}
 
-	var records apio.SimplyApiDnsRecords
+	var records objects.SimplyApiDnsRecords
 	err = json.Unmarshal(res, &records)
 	if err != nil {
 		return nil, err
@@ -36,7 +36,7 @@ func GetDnsRecords(productObject string) ([]*apio.SimplyDnsRecord, error) {
 	return records.Records, nil
 }
 
-func CreateDnsRecord(productObject string, obj *apio.SimplyDnsRecord) (*apio.SimplyApiSuccessResponse, error) {
+func CreateDnsRecord(productObject string, obj *objects.SimplyDnsRecord) (*objects.SimplyApiSuccessResponse, error) {
 	if configs.IsMocking {
 		return mocks.CreateDnsRecord()
 	}
@@ -46,7 +46,7 @@ func CreateDnsRecord(productObject string, obj *apio.SimplyDnsRecord) (*apio.Sim
 		return nil, err
 	}
 
-	var response *apio.SimplyApiSuccessResponse
+	var response *objects.SimplyApiSuccessResponse
 	err = json.Unmarshal(res, &response)
 	if err != nil {
 		return nil, err
@@ -55,7 +55,7 @@ func CreateDnsRecord(productObject string, obj *apio.SimplyDnsRecord) (*apio.Sim
 	return response, nil
 }
 
-func UpdateDnsRecord(productObject string, recordId int64, obj *apio.SimplyDnsRecord) (*apio.SimplyApiSuccessResponse, error) {
+func UpdateDnsRecord(productObject string, recordId int64, obj *objects.SimplyDnsRecord) (*objects.SimplyApiSuccessResponse, error) {
 	if configs.IsMocking {
 		return mocks.UpdateDnsRecord()
 	}
@@ -65,7 +65,7 @@ func UpdateDnsRecord(productObject string, recordId int64, obj *apio.SimplyDnsRe
 		return nil, err
 	}
 
-	var response *apio.SimplyApiSuccessResponse
+	var response *objects.SimplyApiSuccessResponse
 	err = json.Unmarshal(res, &response)
 	if err != nil {
 		return nil, err
@@ -74,7 +74,7 @@ func UpdateDnsRecord(productObject string, recordId int64, obj *apio.SimplyDnsRe
 	return response, nil
 }
 
-func RemoveDnsRecord(productObject string, recordId int64) (*apio.SimplyApiSuccessResponse, error) {
+func RemoveDnsRecord(productObject string, recordId int64) (*objects.SimplyApiSuccessResponse, error) {
 	if configs.IsMocking {
 		return mocks.RemoveDnsRecord()
 	}
@@ -84,7 +84,7 @@ func RemoveDnsRecord(productObject string, recordId int64) (*apio.SimplyApiSucce
 		return nil, err
 	}
 
-	var response *apio.SimplyApiSuccessResponse
+	var response *objects.SimplyApiSuccessResponse
 	err = json.Unmarshal(res, &response)
 	if err != nil {
 		return nil, err
@@ -93,7 +93,7 @@ func RemoveDnsRecord(productObject string, recordId int64) (*apio.SimplyApiSucce
 	return response, nil
 }
 
-func GetProducts() ([]*apio.SimplyProduct, error) {
+func GetProducts() ([]*objects.SimplyProduct, error) {
 	if configs.IsMocking {
 		return mocks.GetProducts()
 	}
@@ -103,7 +103,7 @@ func GetProducts() ([]*apio.SimplyProduct, error) {
 		return nil, err
 	}
 
-	var records apio.SimplyApiProducts
+	var records objects.SimplyApiProducts
 	err = json.Unmarshal(res, &records)
 	if err != nil {
 		return nil, err

@@ -5,7 +5,7 @@ import "github.com/spf13/cobra"
 //goland:noinspection GoNameStartsWithPackageName
 var CreateCmd = &cobra.Command{
 	Use:   "create",
-	Short: "Create a new DNS record to a Domain",
+	Short: "Create a new DNS record on a Domain.",
 	Args:  handleArgs,
 	Run:   cmdRun,
 }

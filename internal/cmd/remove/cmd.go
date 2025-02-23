@@ -5,7 +5,7 @@ import "github.com/spf13/cobra"
 //goland:noinspection GoNameStartsWithPackageName
 var RemoveCmd = &cobra.Command{
 	Use:   "remove",
-	Short: "Remove an existing DNS record from a Domain",
+	Short: "Remove an existing DNS record from a Domain.",
 	Args:  handleArgs,
 	Run:   cmdRun,
 }

@@ -3,8 +3,8 @@ package collectors
 import (
 	"fmt"
 
-	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/forms"
+	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
@@ -34,7 +34,7 @@ func CollectDomain(initialDomain string) (cancelled bool, domain string) {
 	return
 }
 
-func CollectDnsRecord(initialDnsRecord int64, domain string) (cancelled bool, record *apio.SimplyDnsRecord) {
+func CollectDnsRecord(initialDnsRecord int64, domain string) (cancelled bool, record *objects.SimplyDnsRecord) {
 	records := shared.PullDnsRecords(domain, "")
 
 	if initialDnsRecord > 0 {

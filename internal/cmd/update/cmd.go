@@ -5,7 +5,7 @@ import "github.com/spf13/cobra"
 //goland:noinspection GoNameStartsWithPackageName
 var UpdateCmd = &cobra.Command{
 	Use:   "update",
-	Short: "Update an existing DNS record on a Domain",
+	Short: "Update an existing DNS record on a Domain.",
 	Args:  handleArgs,
 	Run:   cmdRun,
 }

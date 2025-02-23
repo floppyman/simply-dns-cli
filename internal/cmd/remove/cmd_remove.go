@@ -9,7 +9,7 @@ import (
 )
 
 func cmdRun(_ *cobra.Command, _ []string) {
-	styles.Println(styles.Info("Remove existing dns record"))
+	styles.Println(styles.Info("Remove existing DNS Record from Domain"))
 	styles.Blank()
 
 	cancelled, domain := collectors.CollectDomain(options.Domain)

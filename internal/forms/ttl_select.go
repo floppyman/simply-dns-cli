@@ -7,14 +7,14 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	log "github.com/umbrella-sh/um-common/logging/basic"
 
-	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
+	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 )
 
 var TtlSelectHeader = fmt.Sprintf("%-*s", longestHeader, "TTL:")
 
-func RunTtlSelect(initialValue apio.DnsRecordTTL) (bool, apio.DnsRecordTTL) {
+func RunTtlSelect(initialValue objects.DnsRecordTTL) (bool, objects.DnsRecordTTL) {
 	choices := []string{
 		"10 Minutes",
 		"1 Hour (recommended)",
@@ -23,11 +23,11 @@ func RunTtlSelect(initialValue apio.DnsRecordTTL) (bool, apio.DnsRecordTTL) {
 		"24 Hours",
 	}
 	values := []any{
-		apio.DnsRecTTLMin10,
-		apio.DnsRecTTLHour1,
-		apio.DnsRecTTLHours6,
-		apio.DnsRecTTLHours12,
-		apio.DnsRecTTLHours24,
+		objects.DnsRecTTLMin10,
+		objects.DnsRecTTLHour1,
+		objects.DnsRecTTLHours6,
+		objects.DnsRecTTLHours12,
+		objects.DnsRecTTLHours24,
 	}
 	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
 		HeaderText:   TtlSelectHeader,
@@ -42,7 +42,7 @@ func RunTtlSelect(initialValue apio.DnsRecordTTL) (bool, apio.DnsRecordTTL) {
 		os.Exit(1)
 	}
 	if m, ok := m.(gf.GenericSelectModel); ok && !m.InputCancelled() {
-		return false, m.Values[m.SelectedIndex()].(apio.DnsRecordTTL)
+		return false, m.Values[m.SelectedIndex()].(objects.DnsRecordTTL)
 	}
-	return true, apio.DnsRecTTLHour1
+	return true, objects.DnsRecTTLHour1
 }

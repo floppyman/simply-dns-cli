@@ -5,7 +5,7 @@ import "github.com/spf13/cobra"
 //goland:noinspection GoNameStartsWithPackageName
 var ListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "Lists all records from a domain",
+	Short: "Lists all DNS Records from a Domain.",
 	Args:  handleArgs,
 	Run:   cmdRun,
 }
