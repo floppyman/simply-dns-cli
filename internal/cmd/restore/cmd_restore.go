@@ -76,38 +76,113 @@ func cmdRun(_ *cobra.Command, _ []string) {
 	}
 
 	fileDnsRecords := file.Items[domain].DnsRecords
-	generateCommands(fileDnsRecords, records)
+	toCreate, toDelete := findChanges(fileDnsRecords, records)
+
+	styles.Blank()
+	generateCommands(domain, toCreate, toDelete)
 }
 
-func generateCommands(localDnsRecords []*api.SimplyDnsRecord, remoteDnsRecords []*api.SimplyDnsRecord) (toCreate map[string]*api.SimplyDnsRecord, toUpdate map[string]*api.SimplyDnsRecord, toDelete map[string]*api.SimplyDnsRecord) {
-	noChanges := make(map[string]*api.SimplyDnsRecord)
-	hasChanges := make(map[string]*api.SimplyDnsRecord)
+func generateCommands(domain string, toCreate map[string]*api.SimplyDnsRecord, toDelete map[string]*api.SimplyDnsRecord) {
+	styles.WaitPrint("Generating commands to execute to restore the domain from the backup selected")
+
+	if len(toCreate) == 0 && len(toDelete) == 0 {
+		styles.InfoPrint("No commands needed to restore the domain")
+		return
+	}
+
+	styles.Blank()
+
+	longestDomain := 0
+	for _, v := range toCreate {
+		domLen := len(fmt.Sprintf("%s.%s", v.Name, domain))
+		if domLen > longestDomain {
+			longestDomain = domLen
+		}
+	}
+	for _, v := range toDelete {
+		domLen := len(fmt.Sprintf("%s.%s", v.Name, domain))
+		if domLen > longestDomain {
+			longestDomain = domLen
+		}
+	}
+
+	for _, v := range toDelete {
+		styles.Printf("%s%s\n",
+			styles.Graphic("%-*s | ", longestDomain, fmt.Sprintf("%s.%s", v.Name, domain)),
+			styles.Error("%s remove -d %s -r %d",
+				configs.AppName,
+				domain,
+				v.RecordId,
+			),
+		)
+	}
+
+	for _, v := range toCreate {
+		if v.Type == api.DnsRecTypeMX {
+			styles.Printf("%s%s\n",
+				styles.Graphic("%-*s | ", longestDomain, fmt.Sprintf("%s.%s", v.Name, domain)),
+				styles.Success("%s create -d %s -t %s -l %d -n %s -v %s -p %d -c %s",
+					configs.AppName,
+					domain,
+					v.Type,
+					v.TTL,
+					v.Name,
+					v.Data,
+					v.Priority,
+					v.Comment,
+				),
+			)
+			continue
+		}
+
+		styles.Printf("%s%s\n",
+			styles.Graphic("%-*s | ", longestDomain, fmt.Sprintf("%s.%s", v.Name, domain)),
+			styles.Success(`%s create -d %s -t %s -l %d -n %s -v %s -c "%s"`,
+				configs.AppName,
+				domain,
+				v.Type,
+				v.TTL,
+				v.Name,
+				v.Data,
+				v.Comment,
+			),
+		)
+	}
+	styles.Blank()
+	styles.SuccessPrint("Commands generated")
+}
+
+func findChanges(localDnsRecords []*api.SimplyDnsRecord, remoteDnsRecords []*api.SimplyDnsRecord) (toCreate map[string]*api.SimplyDnsRecord, toDelete map[string]*api.SimplyDnsRecord) {
 	toCreate = make(map[string]*api.SimplyDnsRecord)
-	toUpdate = make(map[string]*api.SimplyDnsRecord)
 	toDelete = make(map[string]*api.SimplyDnsRecord)
 
+	// detect new elements
 	for _, l := range localDnsRecords {
+		found := false
 		for _, r := range remoteDnsRecords {
 			if l.GetHash() == r.GetHash() {
 				found = true
 			}
 		}
+		if !found {
+			toCreate[l.GetHash()] = l
+		}
 	}
 
-	// detect new elements
+	// detect delete elements
 	for _, r := range remoteDnsRecords {
-		found := false
+		found := true
 		for _, l := range localDnsRecords {
 			if l.GetHash() == r.GetHash() {
-				found = true
+				found = false
 			}
 		}
-		if !found {
+		if found {
 			toDelete[r.GetHash()] = r
 		}
 	}
 
-	return toCreate, toUpdate, toDelete
+	return toCreate, toDelete
 }
 
 func collectDomainFromBackup(file *RestoreFile) (cancelled bool, domain string) {

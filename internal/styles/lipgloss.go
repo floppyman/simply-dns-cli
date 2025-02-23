@@ -36,8 +36,9 @@ var (
 	styleProgramTitle = lipgloss.NewStyle().Foreground(orange1Color).Render
 )
 
-func Print(text string)   { fmt.Print(text) }
-func Println(text string) { fmt.Println(text) }
+func Print(text string)                      { fmt.Print(text) }
+func Printf(format string, a ...interface{}) { fmt.Printf(format, a...) }
+func Println(text string)                    { fmt.Println(text) }
 func ProgramTitle(format string, a ...interface{}) string {
 	return styleProgramTitle(fmt.Sprintf(format, a...))
 }

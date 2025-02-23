@@ -156,13 +156,19 @@ func (r SimplyDnsRecord) Print(prefix string) {
 }
 
 func (r SimplyDnsRecord) GetHash() string {
+	var priority int32 = -1
+	if r.Priority != nil {
+		if r.Priority.Valid {
+			priority = r.Priority.Value
+		}
+	}
 	data := fmt.Sprintf(
 		"%s||%s||%s||%s||%s||%s",
 		DnsTypeToText(r.Type),
 		r.Name,
 		r.Data,
 		DnsTTLToText(r.TTL),
-		strconv.Itoa(int(ext.Iif(r.Priority.Valid, r.Priority.Value, -1))),
+		strconv.Itoa(int(priority)),
 		r.Comment,
 	)
 	h := sha256.New()
