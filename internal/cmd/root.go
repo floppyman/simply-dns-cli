@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/umbrella-sh/simply-dns-cli/internal/api"
+	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/backup"
 	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/create"
 	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/list"
@@ -28,7 +29,7 @@ func init() {
 }
 
 func RootExecute() error {
-	api.Init(api.SimplyApiConfig{
+	api.Init(apio.SimplyApiConfig{
 		Url:           configs.Main.SimplyApi.Url,
 		AccountNumber: configs.Main.SimplyApi.AccountNumber,
 		AccountApiKey: configs.Main.SimplyApi.AccountApiKey,

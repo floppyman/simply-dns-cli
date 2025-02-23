@@ -7,45 +7,45 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	log "github.com/umbrella-sh/um-common/logging/basic"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/api"
+	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
 	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
 	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 )
 
 var TypeSelectHeader = fmt.Sprintf("%-*s", longestHeader, "Entry Type:")
 
-func RunTypeSelect(initialValue api.DnsRecordType) (bool, api.DnsRecordType) {
+func RunTypeSelect(initialValue apio.DnsRecordType) (bool, apio.DnsRecordType) {
 	choices := []string{
-		string(api.DnsRecTypeA),
-		string(api.DnsRecTypeAAAA),
-		string(api.DnsRecTypeALIAS),
-		string(api.DnsRecTypeCAA),
-		string(api.DnsRecTypeCNAME),
-		string(api.DnsRecTypeDNSKEY),
-		string(api.DnsRecTypeDS),
-		string(api.DnsRecTypeHTTPS),
-		string(api.DnsRecTypeLOC),
-		string(api.DnsRecTypeMX),
-		string(api.DnsRecTypeNS),
-		string(api.DnsRecTypeSSHFP),
-		string(api.DnsRecTypeTLSA),
-		string(api.DnsRecTypeTXT),
+		string(apio.DnsRecTypeA),
+		string(apio.DnsRecTypeAAAA),
+		string(apio.DnsRecTypeALIAS),
+		string(apio.DnsRecTypeCAA),
+		string(apio.DnsRecTypeCNAME),
+		string(apio.DnsRecTypeDNSKEY),
+		string(apio.DnsRecTypeDS),
+		string(apio.DnsRecTypeHTTPS),
+		string(apio.DnsRecTypeLOC),
+		string(apio.DnsRecTypeMX),
+		string(apio.DnsRecTypeNS),
+		string(apio.DnsRecTypeSSHFP),
+		string(apio.DnsRecTypeTLSA),
+		string(apio.DnsRecTypeTXT),
 	}
 	values := []any{
-		api.DnsRecTypeA,
-		api.DnsRecTypeAAAA,
-		api.DnsRecTypeALIAS,
-		api.DnsRecTypeCAA,
-		api.DnsRecTypeCNAME,
-		api.DnsRecTypeDNSKEY,
-		api.DnsRecTypeDS,
-		api.DnsRecTypeHTTPS,
-		api.DnsRecTypeLOC,
-		api.DnsRecTypeMX,
-		api.DnsRecTypeNS,
-		api.DnsRecTypeSSHFP,
-		api.DnsRecTypeTLSA,
-		api.DnsRecTypeTXT,
+		apio.DnsRecTypeA,
+		apio.DnsRecTypeAAAA,
+		apio.DnsRecTypeALIAS,
+		apio.DnsRecTypeCAA,
+		apio.DnsRecTypeCNAME,
+		apio.DnsRecTypeDNSKEY,
+		apio.DnsRecTypeDS,
+		apio.DnsRecTypeHTTPS,
+		apio.DnsRecTypeLOC,
+		apio.DnsRecTypeMX,
+		apio.DnsRecTypeNS,
+		apio.DnsRecTypeSSHFP,
+		apio.DnsRecTypeTLSA,
+		apio.DnsRecTypeTXT,
 	}
 	model := gf.InitGenericSelectModel(gf.GenericSelectModelInput{
 		HeaderText:   TypeSelectHeader,
@@ -60,7 +60,7 @@ func RunTypeSelect(initialValue api.DnsRecordType) (bool, api.DnsRecordType) {
 		os.Exit(1)
 	}
 	if m, ok := m.(gf.GenericSelectModel); ok && !m.InputCancelled() {
-		return false, m.Values[m.SelectedIndex()].(api.DnsRecordType)
+		return false, m.Values[m.SelectedIndex()].(apio.DnsRecordType)
 	}
 	return true, ""
 }

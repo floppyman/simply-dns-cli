@@ -9,9 +9,10 @@ PROJECT=github.com/umbrella-sh/simply-dns-cli
 # git commit -am "One more change after the tags"
 VERSION := $(shell git describe --tags --match "v*" | sed s/awt-//g)
 BUILD_DATE := $(shell date -u +%Y-%m-%d)
+DEBUG := false
 
 # Setup the -ldflags option for go build here, interpolate the variable values
-LDFLAGS=-ldflags "-X main.Version=$(VERSION) -X main.BuildDate=$(BUILD_DATE)"
+LDFLAGS=-ldflags "-X main.Version=$(VERSION) -X main.BuildDate=$(BUILD_DATE) -X main.Debug=$(DEBUG)"
 
 # Builds the project
 linux:

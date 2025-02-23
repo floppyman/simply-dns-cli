@@ -41,7 +41,7 @@ func cmdRun(_ *cobra.Command, _ []string) {
 func removeRecord(domain string, recordId int64) {
 	styles.WaitPrint("Removing dns entry")
 
-	res, err := api.DeleteDnsRecord(domain, recordId)
+	res, err := api.RemoveDnsRecord(domain, recordId)
 	if err != nil {
 		styles.FailPrint("Failed to remove DNS Entry")
 		styles.FailPrint("Error: %v", err)

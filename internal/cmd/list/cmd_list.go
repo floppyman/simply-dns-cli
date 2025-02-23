@@ -7,7 +7,7 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/api"
+	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/collectors"
 	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
@@ -33,10 +33,10 @@ func cmdRun(_ *cobra.Command, _ []string) {
 	rows := make([][]string, 0)
 	for _, v := range records {
 		v1 := strconv.FormatInt(v.RecordId, 10)
-		v2 := api.DnsTypeToText(v.Type)
+		v2 := apio.DnsTypeToText(v.Type)
 		v3 := v.Name
 		v4 := v.Data
-		v5 := api.DnsTTLToNumberText(v.TTL)
+		v5 := apio.DnsTTLToNumberText(v.TTL)
 		v6 := ""
 		if v.Priority != nil {
 			v6 = v.Priority.ToString()

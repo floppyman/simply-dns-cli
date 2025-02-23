@@ -5,14 +5,14 @@ import (
 	"os"
 	"time"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/api"
+	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
 )
 
 //goland:noinspection GoNameStartsWithPackageName
 type RestoreFile struct {
-	TimeStamp time.Time                     `json:"time_stamp"`
-	Items     map[string]*api.SimplyProduct `json:"items"`
+	TimeStamp time.Time                      `json:"time_stamp"`
+	Items     map[string]*apio.SimplyProduct `json:"items"`
 }
 
 func LoadBackup(backupFilePath string) *RestoreFile {

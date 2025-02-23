@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strings"
+
 	"github.com/umbrella-sh/simply-dns-cli/internal/cmd"
 	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
 	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
@@ -9,18 +11,19 @@ import (
 var (
 	Version   = "0.0.0"
 	BuildDate = "now"
-	Debug     = false
+	Debug     = "false"
+	IsDebug   = strings.ToLower(Debug) == "true"
 )
 
 func main() {
 	printHeader()
 
-	err := configs.InitConfig(Debug)
+	err := configs.InitConfig(IsDebug)
 	if err != nil {
 		styles.FailPrint("Be sure to create a 'config.json' either in '~/.config/%s/' or besides the executable", configs.AppName)
 		return
 	}
-	if Debug {
+	if IsDebug {
 		styles.Blank()
 	}
 

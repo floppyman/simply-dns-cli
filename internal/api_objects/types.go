@@ -1,4 +1,4 @@
-package api
+package api_objects
 
 type SimplyApiConfig struct {
 	Url           string `json:"url"`

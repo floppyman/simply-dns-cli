@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/umbrella-sh/um-common/ext"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/api"
+	apio "github.com/umbrella-sh/simply-dns-cli/internal/api_objects"
 	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
 	"github.com/umbrella-sh/simply-dns-cli/internal/forms"
 	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
@@ -82,7 +82,7 @@ func cmdRun(_ *cobra.Command, _ []string) {
 	generateCommands(domain, toCreate, toDelete)
 }
 
-func generateCommands(domain string, toCreate map[string]*api.SimplyDnsRecord, toDelete map[string]*api.SimplyDnsRecord) {
+func generateCommands(domain string, toCreate map[string]*apio.SimplyDnsRecord, toDelete map[string]*apio.SimplyDnsRecord) {
 	styles.WaitPrint("Generating commands to execute to restore the domain from the backup selected")
 
 	if len(toCreate) == 0 && len(toDelete) == 0 {
@@ -118,7 +118,7 @@ func generateCommands(domain string, toCreate map[string]*api.SimplyDnsRecord, t
 	}
 
 	for _, v := range toCreate {
-		if v.Type == api.DnsRecTypeMX {
+		if v.Type == apio.DnsRecTypeMX {
 			styles.Printf("%s%s\n",
 				styles.Graphic("%-*s | ", longestDomain, fmt.Sprintf("%s.%s", v.Name, domain)),
 				styles.Success("%s create -d %s -t %s -l %d -n %s -v %s -p %d -c %s",
@@ -152,9 +152,9 @@ func generateCommands(domain string, toCreate map[string]*api.SimplyDnsRecord, t
 	styles.SuccessPrint("Commands generated")
 }
 
-func findChanges(localDnsRecords []*api.SimplyDnsRecord, remoteDnsRecords []*api.SimplyDnsRecord) (toCreate map[string]*api.SimplyDnsRecord, toDelete map[string]*api.SimplyDnsRecord) {
-	toCreate = make(map[string]*api.SimplyDnsRecord)
-	toDelete = make(map[string]*api.SimplyDnsRecord)
+func findChanges(localDnsRecords []*apio.SimplyDnsRecord, remoteDnsRecords []*apio.SimplyDnsRecord) (toCreate map[string]*apio.SimplyDnsRecord, toDelete map[string]*apio.SimplyDnsRecord) {
+	toCreate = make(map[string]*apio.SimplyDnsRecord)
+	toDelete = make(map[string]*apio.SimplyDnsRecord)
 
 	// detect new elements
 	for _, l := range localDnsRecords {
