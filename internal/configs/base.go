@@ -5,4 +5,4 @@ const AppNameTitle = "Simply DNS CLI"
 
 const configFileName = "config.json"
 
-const IsMocking = true
+const IsMocking = false

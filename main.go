@@ -36,11 +36,6 @@ func printHeader() {
 	styles.Blank()
 	styles.Print(styles.ProgramTitle(configs.AppNameTitle))
 	styles.Print(styles.GraphicLight(" v%s", Version))
-	if configs.IsMocking {
-		styles.Print(styles.Graphic(" @ %s", BuildDate))
-		styles.Println(styles.Error(" - Is Mocking"))
-	}else{
-		styles.Println(styles.Graphic(" @ %s", BuildDate))
-	}
+	styles.Println(styles.Graphic(" @ %s", BuildDate))
 	styles.Blank()
 }
