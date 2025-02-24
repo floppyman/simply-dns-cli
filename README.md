@@ -54,3 +54,13 @@ Any options not provided would be asked for.
 ## Screenshots
 
 ![list](screenshots/list_v1.0.0.png) ![create](screenshots/create_v1.0.0.png) ![backup](screenshots/backup_v1.0.0.png)
+
+## Support
+
+If you find this project useful, then please consider sponsoring a coffee using one of the sponsor options.
+
+You can also help the project by giving it a star.
+
+## Issues
+
+If you find any issues, then please submit an issue.
