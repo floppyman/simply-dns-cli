@@ -1,7 +1,7 @@
 # --- Makefile ----
 
 # This how we want to name the binary output
-BINARY=./bin/simply-dns-cli
+BINARY=../bin/simply-dns-cli
 PROJECT=github.com/umbrella-sh/simply-dns-cli
 
 # These are the values we want to pass for VERSION and BUILD
