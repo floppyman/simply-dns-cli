@@ -1,4 +1,4 @@
-# simply-dns-cli
+# Simply DNS CLI
 
 Tool for managing Simply.com DNS entries on multiple domains of an account.
 
