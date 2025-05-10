@@ -16,21 +16,14 @@ LDFLAGS=-ldflags "-X main.Version=$(VERSION) -X main.BuildDate=$(BUILD_DATE) -X 
 
 # Builds the project
 linux:
-	$(info )
-	$(info build)
-	$(info --------------------)
+	$(info clean linux::)
+	if [ -f $(BINARY) ] ; then rm $(BINARY) ; fi
+	$(info build linux::)
 	GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o $(BINARY)
 
 windows:
-	$(info )
-	$(info build)
+	$(info clean windows::)
+	if [ -f $(BINARY).exe ] ; then rm $(BINARY).exe ; fi
+	$(info build windows::)
 	$(info --------------------)
 	GOOS=windows GOARCH=amd64 go build $(LDFLAGS) -o $(BINARY).exe $(PROJECT)
-
-# Cleans our project: deletes binaries
-clean:
-	$(info )
-	$(info clean)
-	$(info --------------------)
-	if [ -f $(BINARY) ] ; then rm $(BINARY) ; fi
-	if [ -f $(BINARY).exe ] ; then rm $(BINARY).exe ; fi
