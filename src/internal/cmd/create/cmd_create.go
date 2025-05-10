@@ -4,14 +4,14 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/umbrella-sh/um-common/jsons"
+	"github.com/floppyman/um-common/jsons"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/api"
-	"github.com/umbrella-sh/simply-dns-cli/internal/collectors"
-	"github.com/umbrella-sh/simply-dns-cli/internal/forms"
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
-	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/api"
+	"github.com/floppyman/simply-dns-cli/internal/collectors"
+	"github.com/floppyman/simply-dns-cli/internal/forms"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
+	"github.com/floppyman/simply-dns-cli/internal/shared"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 func cmdRun(_ *cobra.Command, _ []string) {

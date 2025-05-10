@@ -3,9 +3,9 @@ package main
 import (
 	"strings"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/cmd"
-	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/cmd"
+	"github.com/floppyman/simply-dns-cli/internal/configs"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 var (

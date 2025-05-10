@@ -9,13 +9,13 @@ import (
 	"slices"
 
 	"github.com/spf13/cobra"
-	"github.com/umbrella-sh/um-common/ext"
+	"github.com/floppyman/um-common/ext"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
-	"github.com/umbrella-sh/simply-dns-cli/internal/forms"
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
-	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/configs"
+	"github.com/floppyman/simply-dns-cli/internal/forms"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
+	"github.com/floppyman/simply-dns-cli/internal/shared"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 func cmdRun(_ *cobra.Command, _ []string) {

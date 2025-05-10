@@ -8,13 +8,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/umbrella-sh/um-common/configuration"
-	"github.com/umbrella-sh/um-common/ext"
-	"github.com/umbrella-sh/um-common/types"
+	"github.com/floppyman/um-common/configuration"
+	"github.com/floppyman/um-common/ext"
+	"github.com/floppyman/um-common/types"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
-	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
+	"github.com/floppyman/simply-dns-cli/internal/configs"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 const backupFileName = "backup_{{ts}}.json"

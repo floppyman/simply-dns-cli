@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
 )
 
 func getRequest(path string) ([]byte, error) {

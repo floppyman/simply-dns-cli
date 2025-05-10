@@ -3,9 +3,9 @@ package shared
 import (
 	"fmt"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/api"
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/api"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 func PullProductsAndDnsRecords() map[string]*objects.SimplyProduct {

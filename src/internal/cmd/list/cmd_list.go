@@ -7,10 +7,10 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/collectors"
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
-	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/collectors"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
+	"github.com/floppyman/simply-dns-cli/internal/shared"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 func cmdRun(_ *cobra.Command, _ []string) {

@@ -3,9 +3,9 @@ package remove
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/api"
-	"github.com/umbrella-sh/simply-dns-cli/internal/collectors"
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/api"
+	"github.com/floppyman/simply-dns-cli/internal/collectors"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 func cmdRun(_ *cobra.Command, _ []string) {

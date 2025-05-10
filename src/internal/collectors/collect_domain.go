@@ -3,10 +3,10 @@ package collectors
 import (
 	"fmt"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/forms"
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
-	"github.com/umbrella-sh/simply-dns-cli/internal/shared"
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/forms"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
+	"github.com/floppyman/simply-dns-cli/internal/shared"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 func AcceptInfo() (cancelled bool, accepted bool) {

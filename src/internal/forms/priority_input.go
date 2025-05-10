@@ -6,11 +6,11 @@ import (
 	"strconv"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/umbrella-sh/um-common/ext"
-	"github.com/umbrella-sh/um-common/jsons"
-	log "github.com/umbrella-sh/um-common/logging/basic"
+	"github.com/floppyman/um-common/ext"
+	"github.com/floppyman/um-common/jsons"
+	log "github.com/floppyman/um-common/logging/basic"
 
-	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
+	gf "github.com/floppyman/simply-dns-cli/internal/forms/generic_fields"
 )
 
 var PriorityInputHeader = fmt.Sprintf("%-*s", longestHeader, "Priority:")

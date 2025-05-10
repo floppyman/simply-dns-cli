@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/umbrella-sh/um-common/ext"
-	"github.com/umbrella-sh/um-common/jsons"
+	"github.com/floppyman/um-common/ext"
+	"github.com/floppyman/um-common/jsons"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 type SimplyApiConfig struct {

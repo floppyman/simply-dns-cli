@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
-	"github.com/umbrella-sh/simply-dns-cli/internal/mocks"
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/configs"
+	"github.com/floppyman/simply-dns-cli/internal/mocks"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 func LoadBackup(backupFilePath string) *objects.RestoreFile {

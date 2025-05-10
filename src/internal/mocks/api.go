@@ -3,9 +3,9 @@ package mocks
 import (
 	"time"
 
-	"github.com/umbrella-sh/um-common/jsons"
+	"github.com/floppyman/um-common/jsons"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
 )
 
 func GetDnsRecords() ([]*objects.SimplyDnsRecord, error) {

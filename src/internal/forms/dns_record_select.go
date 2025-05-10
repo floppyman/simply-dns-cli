@@ -5,10 +5,10 @@ import (
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
-	log "github.com/umbrella-sh/um-common/logging/basic"
+	log "github.com/floppyman/um-common/logging/basic"
 
-	gf "github.com/umbrella-sh/simply-dns-cli/internal/forms/generic_fields"
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
+	gf "github.com/floppyman/simply-dns-cli/internal/forms/generic_fields"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
 )
 
 var DnsRecordSelectHeader = fmt.Sprintf("%-*s", longestHeader, "Dns Record:")

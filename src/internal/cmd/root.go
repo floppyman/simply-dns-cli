@@ -3,15 +3,15 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/api"
-	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/backup"
-	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/create"
-	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/list"
-	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/remove"
-	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/restore"
-	"github.com/umbrella-sh/simply-dns-cli/internal/cmd/update"
-	"github.com/umbrella-sh/simply-dns-cli/internal/configs"
-	"github.com/umbrella-sh/simply-dns-cli/internal/objects"
+	"github.com/floppyman/simply-dns-cli/internal/api"
+	"github.com/floppyman/simply-dns-cli/internal/cmd/backup"
+	"github.com/floppyman/simply-dns-cli/internal/cmd/create"
+	"github.com/floppyman/simply-dns-cli/internal/cmd/list"
+	"github.com/floppyman/simply-dns-cli/internal/cmd/remove"
+	"github.com/floppyman/simply-dns-cli/internal/cmd/restore"
+	"github.com/floppyman/simply-dns-cli/internal/cmd/update"
+	"github.com/floppyman/simply-dns-cli/internal/configs"
+	"github.com/floppyman/simply-dns-cli/internal/objects"
 )
 
 var rootCmd = &cobra.Command{

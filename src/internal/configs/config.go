@@ -7,9 +7,9 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/umbrella-sh/um-common/configuration"
+	"github.com/floppyman/um-common/configuration"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 type Config struct {

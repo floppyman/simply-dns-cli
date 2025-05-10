@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/umbrella-sh/um-common/ext"
+	"github.com/floppyman/um-common/ext"
 
-	"github.com/umbrella-sh/simply-dns-cli/internal/styles"
+	"github.com/floppyman/simply-dns-cli/internal/styles"
 )
 
 type (
